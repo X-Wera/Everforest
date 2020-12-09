@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     public GameObject EventObject;
+    public GameObject camera;
     private InputHandler ip;
     float xvel = 0f;
     float yvel = 0f;
+    bool lockCamOnCharacter = true;
 
 
 
@@ -16,6 +18,7 @@ public class PlayerControls : MonoBehaviour
     void Start()
     {
         EventObject = GameObject.Find("EventObject");
+        camera = GameObject.Find("Main Camera");
         ip = EventObject.GetComponent<InputHandler>();
     }
 
@@ -48,8 +51,13 @@ public class PlayerControls : MonoBehaviour
             }
         }
         this.transform.position = this.transform.position + new Vector3(xvel, yvel);
+        if (lockCamOnCharacter)
+        {
+            camera.transform.position = camera.transform.position + new Vector3(xvel, yvel);
+        }
+
         xvel = 0;
         yvel = 0;
-        print(this.transform.position);
+        //print(this.transform.position);
     }
 }
