@@ -5,20 +5,18 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
     public GameObject EventObject;
-    public GameObject camera;
+    public GameObject maincamera;
     private InputHandler ip;
     float xvel = 0f;
     float yvel = 0f;
     bool lockCamOnCharacter = true;
-
-
-
     float speed = 0.05f;
+
     // Start is called before the first frame update
     void Start()
     {
-        EventObject = GameObject.Find("EventObject");
-        camera = GameObject.Find("Main Camera");
+        EventObject = GameObject.Find("InputHandler");
+        maincamera = GameObject.Find("MainCamera");
         ip = EventObject.GetComponent<InputHandler>();
     }
 
@@ -51,9 +49,10 @@ public class PlayerControls : MonoBehaviour
             }
         }
         this.transform.position = this.transform.position + new Vector3(xvel, yvel);
+
         if (lockCamOnCharacter)
         {
-            camera.transform.position = camera.transform.position + new Vector3(xvel, yvel);
+            maincamera.transform.position = maincamera.transform.position + new Vector3(xvel, yvel);
         }
 
         xvel = 0;
