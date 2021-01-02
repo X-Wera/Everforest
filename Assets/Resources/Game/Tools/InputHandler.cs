@@ -2,19 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Concurrent;
+using System.Linq;
 
 public class InputHandler : MonoBehaviour
 {
+    // Holds all currently pressed keys
+    HashSet<string> keysPressed = new HashSet<string>();
 
-    static readonly HashSet<string> keysPressed = new HashSet<string>();
-    static readonly Queue<string> PressedQeue = new Queue<string>();
+    // Holds all keys that have been pressed in order
+    Queue<string> pressedQueue = new Queue<string>();
 
     void OnGUI()
     {
 
         Event e = Event.current;
 
+        // CARSONS CRAZY KEY HANDLING CODE
         string keyposition = e.type.ToString();
         string key = e.keyCode.ToString();
 
@@ -25,7 +28,7 @@ public class InputHandler : MonoBehaviour
                 try
                 {
                     keysPressed.Add(key);
-
+                    pressedQueue.Enqueue(key);
                 }
                 catch (ArgumentException)
                 {
@@ -38,12 +41,43 @@ public class InputHandler : MonoBehaviour
             }
         }
     }
+
+    // KEYSPRESSED ACTIONS
     public HashSet<string> getKeysPressed()
     {
         return keysPressed;
     }
 
+    // PRESSEDQUEUE ACTIONS
+    public void clearPressedQueue()
+    {
+        pressedQueue.Clear();
+    }
 
+    public string lastOfQueue()
+    {
+        return pressedQueue.Peek();
+    }
+
+    public void dequeue()
+    {
+        pressedQueue.Dequeue();
+    }
+
+    public string itemsInQueue()
+    {
+        return pressedQueue.Count.ToString();
+    }
+
+    public void removeDuplicatesFromQueue()
+    {
+        pressedQueue = new Queue<string>(pressedQueue.Distinct());
+    }
+
+    public void removeSpecificElementFromQueue(string specificElementToBeRemovedFromQueue)
+    {
+        pressedQueue = new Queue<string>(pressedQueue.Where(x => x != specificElementToBeRemovedFromQueue));
+    }
 }
 
 
