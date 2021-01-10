@@ -2,12 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeObject : EverForestGameObject
+public class SpriteHandler : MonoBehaviour
 {
+
+    void loadSprite(string filepath)
+    {
+        Sprite s = Resources.Load(filepath, typeof(Sprite)) as Sprite;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        setSprite();
+        
     }
 
     // Update is called once per frame

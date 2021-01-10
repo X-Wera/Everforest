@@ -10,25 +10,20 @@ public class GameInitScript : MonoBehaviour
     void Start()
     {
         initCamera();
-        initPlayer();
+        createObject();
         removeLoadingScreen();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    void createObject()
     {
-        
+        TreeObject t = new TreeObject();
     }
 
     void removeLoadingScreen()
     {
         var ls = GameObject.Find("LoadingScreen");
         Destroy(ls);
-    }
-
-    void initPlayer()
-    {
-
     }
 
     void initCamera()

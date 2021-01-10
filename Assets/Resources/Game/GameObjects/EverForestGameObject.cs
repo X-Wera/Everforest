@@ -7,16 +7,18 @@ public class EverForestGameObject : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+
     {
-        
+        setSprite();
     }
 
-    // Update is called once per frame
-    void Update()
+    //SPRITES
+    public void setSprite()
     {
-        
+
     }
 
+    //LOCATION
     public Vector3 getLocation()
     {
         return this.transform.position;

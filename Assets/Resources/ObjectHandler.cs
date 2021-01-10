@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ObjectHandler : MonoBehaviour
 {
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +23,13 @@ public class ObjectHandler : MonoBehaviour
 
     }
 
-    void destroyObject()
+    void destroyObject(EverForestGameObject e)
     {
-
+        Destroy(e);
     }
 
-    void getObjectLocation()
+    void getObjectLocation(EverForestGameObject e)
     {
-
+        e.getLocation();
     }
 }

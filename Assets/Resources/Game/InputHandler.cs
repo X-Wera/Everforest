@@ -12,6 +12,14 @@ public class InputHandler : MonoBehaviour
     // Holds all keys that have been pressed in order
     Queue<string> pressedQueue = new Queue<string>();
 
+    void Update()
+    {
+        if (pressedQueue.Count > 30)
+        {
+
+        }
+    }
+
     void OnGUI()
     {
 
@@ -64,9 +72,9 @@ public class InputHandler : MonoBehaviour
         pressedQueue.Dequeue();
     }
 
-    public string itemsInQueue()
+    public int itemsInQueue()
     {
-        return pressedQueue.Count.ToString();
+        return pressedQueue.Count;
     }
 
     public void removeDuplicatesFromQueue()
@@ -79,8 +87,3 @@ public class InputHandler : MonoBehaviour
         pressedQueue = new Queue<string>(pressedQueue.Where(x => x != specificElementToBeRemovedFromQueue));
     }
 }
-
-
-
-
-
