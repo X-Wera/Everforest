@@ -18,7 +18,9 @@ public class GameInitScript : MonoBehaviour
     void createObject()
     {
         TreeObject t = new TreeObject();
+        t.setLocation(new Vector3(0,0));
     }
+
 
     void removeLoadingScreen()
     {
@@ -31,5 +33,5 @@ public class GameInitScript : MonoBehaviour
         maincamera = GameObject.Find("MainCamera");
         maincamera.SetActive(true);
     }
- 
+
 }

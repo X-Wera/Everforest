@@ -7,7 +7,7 @@ public class TreeObject : EverForestGameObject
     // Start is called before the first frame update
     void Start()
     {
-        setSprite();
+        //Sprite myFruit = Resources.Load("fruits_1", typeof(Sprite)) as Sprite;
     }
 
     // Update is called once per frame
