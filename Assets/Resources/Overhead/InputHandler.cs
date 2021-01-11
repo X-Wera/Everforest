@@ -12,40 +12,45 @@ public class InputHandler : MonoBehaviour
     // Holds all keys that have been pressed in order
     Queue<string> pressedQueue = new Queue<string>();
 
-    void Update()
-    {
-        if (pressedQueue.Count > 30)
-        {
-
-        }
-    }
-
     void OnGUI()
     {
 
         Event e = Event.current;
 
-        // CARSONS CRAZY KEY HANDLING CODE
-        string keyposition = e.type.ToString();
-        string key = e.keyCode.ToString();
-
-        if (!key.Equals("None"))
+        // MOUSE HANDLING CODE
+        if (e.isMouse)
         {
-            if (keyposition.Equals("KeyDown"))
+            string buttonpressed = e.button.ToString();
+            Vector2 position = e.mousePosition;
+        }
+
+
+        // KEY HANDLING CODE
+        if (e.isKey)
+        {
+
+            string keyposition = e.type.ToString();
+            string key = e.keyCode.ToString();
+
+            if (!key.Equals("None"))
             {
-                try
+                if (keyposition.Equals("KeyDown"))
                 {
-                    keysPressed.Add(key);
-                    pressedQueue.Enqueue(key);
+                    try
+                    {
+                        keysPressed.Add(key);
+                        pressedQueue.Enqueue(key);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // IGNORING UNCAUGHT KEYBOARD EVENTS
+                        // Console.WriteLine("Failed to add pressed key to keysPressed.");
+                    }
                 }
-                catch (ArgumentException)
+                if (keyposition.Equals("KeyUp"))
                 {
-                    //Console.WriteLine("Failed to add pressed key to keysPressed.");
+                    keysPressed.Remove(key);
                 }
-            }
-            if (keyposition.Equals("KeyUp"))
-            {
-                keysPressed.Remove(key);
             }
         }
     }

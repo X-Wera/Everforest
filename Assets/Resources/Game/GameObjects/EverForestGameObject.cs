@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class EverForestGameObject : MonoBehaviour
 {
-
-    // Start is called before the first frame update
-    void Start()
-
-    {
-        setSprite();
-    }
+    public SpriteRenderer spriteRenderer;
 
     //SPRITES
-    public void setSprite()
+    public void setSprite(Sprite newSprite)
     {
-
+        spriteRenderer.sprite = newSprite;
     }
 
     //LOCATION
