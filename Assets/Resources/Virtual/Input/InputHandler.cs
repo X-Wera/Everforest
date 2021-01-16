@@ -6,10 +6,15 @@ using System.Linq;
 
 public class InputHandler : MonoBehaviour
 {
+    //All currently pressed mouse buttons
+    bool leftclicked = false;
+    bool rightclicked = false;
+    bool middleclicked = false;
+
     // Holds all currently pressed keys
     HashSet<string> keysPressed = new HashSet<string>();
 
-    // Holds all keys that have been pressed in order
+    // Holds all keys that have been pressed in order of when they were received.
     Queue<string> pressedQueue = new Queue<string>();
 
     void OnGUI()
@@ -20,8 +25,44 @@ public class InputHandler : MonoBehaviour
         // MOUSE HANDLING CODE
         if (e.isMouse)
         {
-            string buttonpressed = e.button.ToString();
-            Vector2 position = e.mousePosition;
+
+            if (e.type.ToString().Equals("mouseUp"))
+            {
+                switch (e.button.ToString())
+                {
+                    case "2":
+                        middleclicked = false;
+                        break;
+                    case "1":
+                        rightclicked = false;
+                        break;
+                    case "0":
+                        leftclicked = false;
+                        break;
+                    case null:
+                        // Ignore
+                        break;
+                }
+            }
+            if (e.type.ToString().Equals("mouseDown"))
+            {
+                switch (e.button.ToString())
+                {
+                    case "2":
+                        middleclicked = true;
+                        break;
+                    case "1":
+                        rightclicked = true;
+                        break;
+                    case "0":
+                        leftclicked = true;
+                        break;
+                    case null:
+                        // Ignore
+                        break;
+                }
+            }
+            //print(e.mousePosition.ToString());
         }
 
 
