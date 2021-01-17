@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// CURRENTLY ONLY HANDLES KEY AND MOUSE ACTIONS
 public class InputHandler : MonoBehaviour
 {
     //All currently pressed mouse buttons
     bool leftclicked = false;
     bool rightclicked = false;
     bool middleclicked = false;
-
+    
     // Holds all currently pressed keys
     HashSet<string> keysPressed = new HashSet<string>();
 
@@ -39,7 +40,7 @@ public class InputHandler : MonoBehaviour
                     case "0":
                         leftclicked = false;
                         break;
-                    case null:
+                    default:
                         // Ignore
                         break;
                 }
@@ -57,7 +58,7 @@ public class InputHandler : MonoBehaviour
                     case "0":
                         leftclicked = true;
                         break;
-                    case null:
+                    default:
                         // Ignore
                         break;
                 }
@@ -94,6 +95,20 @@ public class InputHandler : MonoBehaviour
                 }
             }
         }
+    }
+    // MOUSE BUTTONS PRESSED
+    public bool isLeftMouseButtonPressed()
+    {
+        return leftclicked;
+    }
+
+    public bool isRightMouseButtonPressed()
+    {
+        return rightclicked;
+    }
+    public bool isMIddleMouseButtonPressed()
+    {
+        return middleclicked; ;
     }
 
     // KEYSPRESSED ACTIONS

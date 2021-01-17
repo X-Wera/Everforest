@@ -5,6 +5,7 @@ using UnityEngine;
 public class ResourceLoader : MonoBehaviour
 {
     public Texture2D[] textures;
+    public GameObject[] EverForestObjects;
     public HashSet<Sprite> sprites = new HashSet<Sprite>();
 
     void Start()
@@ -13,11 +14,24 @@ public class ResourceLoader : MonoBehaviour
 
     }
 
-    Sprite getImage(string nameOfImage)
+    public Sprite getImage(string nameOfImage)
     {
         foreach (Sprite i in sprites)
         {
             if (i.name.Equals(nameOfImage))
+            {
+                return i;
+            }
+
+        }
+        return null;
+    }
+
+    public GameObject getObject(string nameOfObject)
+    {
+        foreach (GameObject i in EverForestObjects)
+        {
+            if (i.name.Equals(nameOfObject))
             {
                 return i;
             }

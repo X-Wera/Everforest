@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCharacter : EverForestGameObject
-
+public class InputActuator : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    public InputHandler inputHandler;
+    public ControlHandler controlHandler;
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
