@@ -8,15 +8,16 @@ public class ObjectHandler : MonoBehaviour
     public ControlHandler controlHandler;
     public ResourceLoader resource;
 
-    public void createObject(string s, Vector3 v, bool controlled)
+    public GameObject createObject(string s, Vector3 v, bool controlled)
     {
         GameObject o = resource.getObject(s);
-        Instantiate(o, v, Quaternion.identity);
-        GameObjects.Add(o);
+        var obj = Instantiate(o, v, Quaternion.identity);
+        GameObjects.Add(obj);
         if (controlled)
         {
-            controlHandler.addObject(o);
+            controlHandler.addObject(obj);
         }
+        return obj;
     }
 
     public void destroyObject(GameObject o)

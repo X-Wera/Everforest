@@ -8,9 +8,9 @@ using System.Linq;
 public class InputHandler : MonoBehaviour
 {
     //All currently pressed mouse buttons
-    bool leftclicked = false;
-    bool rightclicked = false;
-    bool middleclicked = false;
+    public bool leftclicked = false;
+    public bool rightclicked = false;
+    public bool middleclicked = false;
     
     // Holds all currently pressed keys
     HashSet<string> keysPressed = new HashSet<string>();
