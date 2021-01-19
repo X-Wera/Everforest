@@ -21,13 +21,12 @@ public class InputActuator : MonoBehaviour
         {
             if (o.GetComponent<MainCharacterScript>() != null)
             {
-                MainCharacterScript mss = o.gameObject.GetComponent<MainCharacterScript>();
+                MainCharacterScript mcs = o.gameObject.GetComponent<MainCharacterScript>();
                 // If(GameObject is an MainCharacter Object){}
                 HashSet<string> input = inputHandler.getKeysPressed();
-                if (input.Contains("LeftArrow") || input.Contains("RightArrow") || input.Contains("UpArrow") || input.Contains("DownArrow"))
-                {
-                    KeyMove k = new KeyMove(o, input, mss.getSpeed());
-                }
+
+                KeyMove k = new KeyMove(o, input, mcs.getSpeed());
+
             }
         }
     }
