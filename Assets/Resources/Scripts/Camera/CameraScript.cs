@@ -10,7 +10,7 @@ public class CameraScript : MonoBehaviour
     {
         if (currenltyFocusedObject != null)
         {
-            this.transform.parent.transform.position = currenltyFocusedObject.transform.position;
+            this.transform.position = currenltyFocusedObject.transform.position;
         }
     }
 

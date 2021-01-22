@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControls : MonoBehaviour
+
+// This file is trash and should be deleted later. I use it as reference to a couple problems I have solved with it.
 {
     public GameObject EventObject;
     public GameObject maincamera;
