@@ -14,9 +14,6 @@ public class CursorScript : MonoBehaviour
     void Update()
     {
 
-        var target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var pos = this.transform.position;
-        //target.y = target.y * -1;
-        this.transform.position = target;
+        this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 }

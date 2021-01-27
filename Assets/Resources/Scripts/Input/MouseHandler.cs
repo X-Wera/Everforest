@@ -7,7 +7,6 @@ public class MouseHandler
     bool leftclicked = false;
     bool rightclicked = false;
     bool middleclicked = false;
-    private Vector3 target;
 
 
     public void mouseAction(Event e)

@@ -28,45 +28,8 @@ public class KeyMove
             o.transform.position = o.transform.position + new Vector3((float)velx, (float)vely);
             return;
         }
-        if (threePressed())
-        {
-            o.transform.position = o.transform.position + new Vector3((float)velx, (float)vely);
-            return;
-        }
-    }
-    bool threePressed()
-    {
-        //ThreePressed is somewhat useless do to hardware constraints and your keyboard not being able to process 3 keys at once.
-        bool threePress = false;
-        if (u && !d && l && r)
-        {
-            //up
-            vely = 0;
-            vely += speed;
-            threePress = true;
-        }
-        if (!u && d && l && r)
-        {
-            //down
-            vely = 0;
-            vely -= speed;
-            threePress = true;
-        }
-        if (u && d && l && !r)
-        {
-            //left
-            velx = 0;
-            velx -= speed;
-            threePress = true;
-        }
-        if (!u && d && l && r)
-        {
-            //down
-            velx = 0;
-            velx += speed;
-            threePress = true;
-        }
-        return threePress;
+        velx = 0;
+        vely = 0;
     }
     bool twoPressed()
     {
