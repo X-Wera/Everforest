@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LastClickScript : MonoBehaviour
 {
+
     void OnGUI()
     {
 
@@ -13,16 +14,7 @@ public class LastClickScript : MonoBehaviour
             switch (e.button.ToString())
             {
                 case "0":
-                    var C = GameObject.Find("Main Camera");
-                    Camera CC = GameObject.Find("Main Camera").GetComponent<Camera>();
-
-                    print(C.transform.position);
-                    var pos = CC.ScreenToWorldPoint(e.mousePosition);
-                    print(pos);
-                    pos.y = pos.y * -1;
-                    this.transform.position = pos;
-
-
+                    this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     break;
                 default:
                     // Ignore

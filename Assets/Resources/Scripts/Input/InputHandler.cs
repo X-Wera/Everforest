@@ -33,4 +33,8 @@ public class InputHandler : MonoBehaviour
         return kh.getKeysPressed();
     }
 
+    public bool getLeftClicked()
+    {
+        return mh.getLeftClicked();
+    }
 }
