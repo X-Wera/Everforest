@@ -19,20 +19,25 @@ public class InputActuator : MonoBehaviour
 
         void move(GameObject o)
         {
-            if (o.GetComponent<MainCharacterScript>() != null)
+            if (o.GetComponent<Rigidbody2D>() != null)
             {
-                MainCharacterScript mcs = o.gameObject.GetComponent<MainCharacterScript>();
-                // If(GameObject is an MainCharacter Object){}
-                if (inputHandler.getKeysPressed() != null)
+                //print(o.GetComponent<Rigidbody2D>());
+                if (o.GetComponent<StatsHolder>() != null)
                 {
-                    HashSet<string> input = inputHandler.getKeysPressed();
-                    KeyMove k = new KeyMove(o, input, mcs.getSpeed());
+                    //print(o.GetComponent<StatsHolder>());
+                    StatsHolder mcs = o.gameObject.GetComponent<StatsHolder>();
+                    if (inputHandler.getKeysPressed() != null)
+                    {
+                        HashSet<string> input = inputHandler.getKeysPressed();
+                        KeyMove k = new KeyMove(o, input, mcs.getSpeed());
+                    }
+
+
+
+
                 }
-
-
-
-
             }
+
         }
     }
 }

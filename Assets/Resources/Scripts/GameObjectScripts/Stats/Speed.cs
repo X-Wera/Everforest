@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Speed : MonoBehaviour
 {
-    double speed = 0;
+    float speed = 0;
 
-    public double getSpeed()
+    public float getSpeed()
     {
         return speed;
     }
-    public void setSpeed(double d)
+    public void setSpeed(float d)
     {
         speed = d;
     }
