@@ -42,9 +42,4 @@ public class GameInitScript : MonoBehaviour
         objectHandler.resource = this.resource;
 
     }
-
-    public InputHandler getInputHandler()
-    {
-        return inputHandler;
-    }
 }
