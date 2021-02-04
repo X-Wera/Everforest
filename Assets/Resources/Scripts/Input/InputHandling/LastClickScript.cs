@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+
 
 public class LastClickScript : MonoBehaviour
 {
@@ -12,11 +12,10 @@ public class LastClickScript : MonoBehaviour
         Event e = Event.current;
         if (e.type.ToString().Equals("mouseDown"))
         {
-            
+
             switch (e.button.ToString())
             {
                 case "0":
-                    //this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     leftPressed = true;
                     break;
                 default:
@@ -35,8 +34,8 @@ public class LastClickScript : MonoBehaviour
                     // Ignore
                     break;
             }
-
         }
+
         if (leftPressed)
         {
             this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);

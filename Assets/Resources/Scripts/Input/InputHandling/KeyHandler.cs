@@ -7,11 +7,8 @@ using System.Linq;
 public class KeyHandler
 
 {
-    bool alt = false;
-    bool capsLock = false;
-    bool command = false;
-    bool control = false;
-    bool shift = false;
+    // HotKeys
+    bool alt = false, capsLock = false, command = false, control = false, shift = false;
 
     // Holds all currently pressed keys
     HashSet<string> keysPressed = new HashSet<string>();
@@ -23,7 +20,6 @@ public class KeyHandler
     {
         checkHotKeys(e);
 
-
         string keyposition = e.type.ToString();
         string key = e.keyCode.ToString();
 
@@ -34,13 +30,12 @@ public class KeyHandler
                 try
                 {
                     keysPressed.Add(key);
-                    pressedQueue.Enqueue(key);
                 }
                 catch (ArgumentException)
                 {
                     // IGNORING UNCAUGHT KEYBOARD EVENTS
-                    // Console.WriteLine("Failed to add pressed key to keysPressed.");
                 }
+                pressedQueue.Enqueue(key);
             }
             if (keyposition.Equals("KeyUp"))
             {
@@ -57,9 +52,6 @@ public class KeyHandler
         control = e.control;
         shift = e.shift;
     }
-
-
-
 
     // KEYSPRESSED ACTIONS
     public HashSet<string> getKeysPressed()

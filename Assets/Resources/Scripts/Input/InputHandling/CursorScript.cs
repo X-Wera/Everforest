@@ -8,10 +8,7 @@ public class CursorScript : MonoBehaviour
     GameInitScript script;
 
 
-
-
-    // Update is called once per frame
-    void Update()
+    void OnGUI()
     {
         this.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }

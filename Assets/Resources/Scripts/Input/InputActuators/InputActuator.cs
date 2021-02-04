@@ -31,13 +31,8 @@ public class InputActuator : MonoBehaviour
                         HashSet<string> input = inputHandler.getKeysPressed();
                         KeyMove k = new KeyMove(o, input, mcs.getSpeed());
                     }
-
-
-
-
                 }
             }
-
         }
     }
 }

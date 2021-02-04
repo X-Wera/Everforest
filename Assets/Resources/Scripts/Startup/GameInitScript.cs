@@ -9,7 +9,6 @@ public class GameInitScript : MonoBehaviour
 
     ResourceLoader resource;
 
-
     InputHandler inputHandler;
     InputActuator inputActuator;
     ControlHandler controlHandler;

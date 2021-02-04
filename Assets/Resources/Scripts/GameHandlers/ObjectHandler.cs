@@ -20,6 +20,14 @@ public class ObjectHandler : MonoBehaviour
         return obj;
     }
 
+    public GameObject createObject(string s, Vector3 v)
+    {
+        GameObject o = resource.getObject(s);
+        var obj = Instantiate(o, v, Quaternion.identity);
+        GameObjects.Add(obj);
+        return obj;
+    }
+
     public void destroyObject(GameObject o)
     {
         controlHandler.removeObject(o);

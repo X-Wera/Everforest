@@ -1,15 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class MouseHandler
-{
-    bool leftclicked = false;
-    bool rightclicked = false;
-    bool middleclicked = false;
 
+{
+    public delegate void ClickAction(Vector3 mp, bool l, bool r, bool m);
+    public static event ClickAction OnClicked;
+    bool leftclicked = false, rightclicked = false, middleclicked = false;
 
     public void mouseAction(Event e)
+    {
+        determineClickUpDownAndButton(e);
+        if (OnClicked != null)
+        {
+            OnClicked(Input.mousePosition, leftclicked, rightclicked, middleclicked);
+        }
+    }
+
+    void determineClickUpDownAndButton(Event e)
     {
         if (e.type.ToString().Equals("mouseUp"))
         {
@@ -49,18 +57,5 @@ public class MouseHandler
                     break;
             }
         }
-    }
-    
-    public bool getLeftClicked()
-    {
-        return leftclicked;
-    }
-    public bool getRightClicked()
-    {
-        return rightclicked;
-    }
-    public bool getMiddleClicked()
-    {
-        return middleclicked;
     }
 }
