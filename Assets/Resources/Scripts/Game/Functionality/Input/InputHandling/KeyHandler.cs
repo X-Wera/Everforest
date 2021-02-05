@@ -53,13 +53,17 @@ public class KeyHandler
         shift = e.shift;
     }
 
-    // KEYSPRESSED ACTIONS
     public HashSet<string> getKeysPressed()
     {
         return keysPressed;
     }
 
-    // PRESSEDQUEUE ACTIONS
+    public Queue<string> getQueuedKeys()
+    {
+        return pressedQueue;
+    }
+
+
     public void clearPressedQueue()
     {
         pressedQueue.Clear();
