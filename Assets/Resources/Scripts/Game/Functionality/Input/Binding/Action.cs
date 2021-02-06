@@ -4,7 +4,6 @@ using UnityEngine;
 
 public enum Action
 {
-
-    MoveLeft, MoveRight, MoveUp, MoveDown, MouseMove
-
+    NoAction, Move , MoveUp, MoveDown, MoveRight, MoveLeft
 }
+

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,8 +30,8 @@ public class PlayerControls : MonoBehaviour
 
     void characterMovement()
     {
-        HashSet<string> kp = ip.getKeysPressed();
-        foreach (string key in kp)
+        //HashSet<string> kp = ip.getKeysPressed();
+        //foreach (string key in kp)
         {
             if (key.Equals("W") || key.Equals("UpArrow"))
             {
@@ -61,4 +61,4 @@ public class PlayerControls : MonoBehaviour
         yvel = 0;
         //print(this.transform.position);
     }
-}
+}*/

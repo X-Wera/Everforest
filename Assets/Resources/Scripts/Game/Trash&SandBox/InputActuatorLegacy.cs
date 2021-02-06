@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputActuator : MonoBehaviour
+public class InputActuatorLegacy
+    : MonoBehaviour
 {
     public InputHandler inputHandler;
     public ControlHandler controlHandler;
@@ -26,13 +27,13 @@ public class InputActuator : MonoBehaviour
                 {
                     //print(o.GetComponent<StatsHolder>());
                     StatsHolder mcs = o.gameObject.GetComponent<StatsHolder>();
-                    if (inputHandler.getKeysPressed() != null)
+                    //if (inputHandler.getKeysPressed() != null)
                     {
-                        HashSet<string> input = inputHandler.getKeysPressed();
-                        KeyMove k = new KeyMove(o, input, mcs.getSpeed());
+                        //HashSet<string> input = inputHandler.getKeysPressed();
+                        //KeyMove k = new KeyMove(o, input, mcs.getSpeed());
                     }
                 }
             }
         }
     }
-}
+}*/

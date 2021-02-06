@@ -11,10 +11,8 @@ public class GameInitScript : MonoBehaviour
 
     ResourceLoader resource;
     InputHandler inputHandler;
-    InputActuator inputActuator;
 
     ObjectHandler objectHandler;
-    ActionManagment actionManagment;
 
     // Start is called before the first frame update
     void Start()
@@ -32,19 +30,22 @@ public class GameInitScript : MonoBehaviour
     // INITALIZATION
     void initCoreComponents()
     {
-        controlHandler = this.gameObject.AddComponent<ControlHandler>() as ControlHandler;
-        inputHandler = this.gameObject.AddComponent<InputHandler>() as InputHandler;
 
-        actionManagment = this.gameObject.AddComponent<ActionManagment>() as ActionManagment;
-        actionManagment.setInputHandler(inputHandler);
-
-        objectHandler = this.gameObject.AddComponent<ObjectHandler>() as ObjectHandler;
-        objectHandler.controlHandler = this.controlHandler;
 
         
+        objectHandler = this.gameObject.AddComponent<ObjectHandler>() as ObjectHandler;
+        controlHandler = this.gameObject.AddComponent<ControlHandler>() as ControlHandler;
+        objectHandler.controlHandler = this.controlHandler;
 
         resource = resourceObject.GetComponent<ResourceLoader>();
         objectHandler.resource = this.resource;
+
+        inputHandler = this.gameObject.AddComponent<InputHandler>() as InputHandler;
+        inputHandler.addControlHandler(controlHandler);
+
+
+
+
 
     }
 }

@@ -11,38 +11,40 @@ public class KeyHandler
     bool alt = false, capsLock = false, command = false, control = false, shift = false;
 
     // Holds all currently pressed keys
-    HashSet<string> keysPressed = new HashSet<string>();
+    HashSet<KeyCode> keysPressed = new HashSet<KeyCode>();
 
     // Holds all keys that have been pressed in order of when they were received.
-    Queue<string> pressedQueue = new Queue<string>();
+    Queue<KeyCode> pressedQueue = new Queue<KeyCode>();
 
     public void keyAction(Event e)
     {
         checkHotKeys(e);
 
-        string keyposition = e.type.ToString();
-        string key = e.keyCode.ToString();
+        EventType keyposition = e.type;
+        KeyCode key = e.keyCode;
 
-        if (!key.Equals("None"))
+        if (!key.Equals(KeyCode.None))
         {
-            if (keyposition.Equals("KeyDown"))
+            if (keyposition.Equals(EventType.KeyDown))
             {
                 try
                 {
                     keysPressed.Add(key);
+                    pressedQueue.Enqueue(key);
                 }
-                catch (ArgumentException)
+                catch
                 {
-                    // IGNORING UNCAUGHT KEYBOARD EVENTS
+                    //ignore
                 }
-                pressedQueue.Enqueue(key);
             }
-            if (keyposition.Equals("KeyUp"))
+            if (keyposition.Equals(EventType.KeyUp))
             {
                 keysPressed.Remove(key);
             }
         }
     }
+
+
 
     void checkHotKeys(Event e)
     {
@@ -53,44 +55,46 @@ public class KeyHandler
         shift = e.shift;
     }
 
-    public HashSet<string> getKeysPressed()
-    {
-        return keysPressed;
-    }
-
-    public Queue<string> getQueuedKeys()
+    public Queue<KeyCode> getQueuedKeys()
     {
         return pressedQueue;
     }
 
-
-    public void clearPressedQueue()
+    public HashSet<KeyCode> getPressedkeys()
     {
-        pressedQueue.Clear();
-    }
-
-    public string lastOfQueue()
-    {
-        return pressedQueue.Peek();
-    }
-
-    public void dequeue()
-    {
-        pressedQueue.Dequeue();
-    }
-
-    public int itemsInQueue()
-    {
-        return pressedQueue.Count;
-    }
-
-    public void removeDuplicatesFromQueue()
-    {
-        pressedQueue = new Queue<string>(pressedQueue.Distinct());
-    }
-
-    public void removeSpecificElementFromQueue(string specificElementToBeRemovedFromQueue)
-    {
-        pressedQueue = new Queue<string>(pressedQueue.Where(x => x != specificElementToBeRemovedFromQueue));
+        return keysPressed;
     }
 }
+
+/*
+public void clearPressedQueue()
+{
+    pressedQueue.Clear();
+}
+
+public string lastOfQueue()
+{
+    return pressedQueue.Peek();
+}
+
+public void dequeue()
+{
+    pressedQueue.Dequeue();
+}
+
+public int itemsInQueue()
+{
+    return pressedQueue.Count;
+}
+
+public void removeDuplicatesFromQueue()
+{
+    pressedQueue = new Queue<string>(pressedQueue.Distinct());
+}
+
+public void removeSpecificElementFromQueue(string specificElementToBeRemovedFromQueue)
+{
+    pressedQueue = new Queue<string>(pressedQueue.Where(x => x != specificElementToBeRemovedFromQueue));
+}
+*/
+

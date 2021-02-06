@@ -38,7 +38,7 @@ public class ResourceLoader : MonoBehaviour
             }
 
         }
-        throw new Exception("Object Does Not Exist!");
+        throw new Exception("Game Object Does Not Exist In EverForestObjects!");
     }
 
     void convertAllImagesToSprites()
