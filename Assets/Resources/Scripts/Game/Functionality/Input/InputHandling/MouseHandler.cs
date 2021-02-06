@@ -6,8 +6,8 @@ using System.Collections.Generic;
 public class MouseHandler
 
 {
-    HashSet<string> mouseButtonsPressed = new HashSet<string>();
-    Queue<Tuple<Vector3, HashSet<string>>> mouseActions = new Queue<Tuple<Vector3, HashSet<string>>>();
+    HashSet<int> mouseButtonsPressed = new HashSet<int>();
+    Queue<Tuple<Vector3, HashSet<int>>> mouseActions = new Queue<Tuple<Vector3, HashSet<int>>>();
 
 
     public void mouseAction(Event e)
@@ -15,21 +15,26 @@ public class MouseHandler
 
         GameObject.Find("LastClick").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (e.type.ToString().Equals("mouseUp"))
+        if (e.type.Equals(EventType.MouseUp))
         {
-            mouseButtonsPressed.Remove(e.button.ToString());
+            mouseButtonsPressed.Remove(e.button);
         }
-        if (e.type.ToString().Equals("mouseDown"))
+        if (e.type.Equals(EventType.MouseDown))
         {
-            mouseButtonsPressed.Add(e.button.ToString());
-            mouseActions.Enqueue(new Tuple<Vector3, HashSet<string>>(Input.mousePosition, mouseButtonsPressed));
+            mouseButtonsPressed.Add(e.button);
+            mouseActions.Enqueue(new Tuple<Vector3, HashSet<int>>(Input.mousePosition, mouseButtonsPressed));
         }
 
     }
 
-    public Queue<Tuple<Vector3, HashSet<string>>> getQueuedMouseClicks()
+    public Queue<Tuple<Vector3, HashSet<int>>> getQueuedMouseClicks()
     {
         return mouseActions;
+    }
+
+    public HashSet<int> getMouseButtonsPressed()
+    {
+        return mouseButtonsPressed;
     }
 }
 

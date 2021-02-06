@@ -30,10 +30,11 @@ public class InputHandler : MonoBehaviour
 
     void Update()
     {
-        Queue<Tuple<Vector3, HashSet<string>>> mouseQ = mh.getQueuedMouseClicks();
+        Queue<Tuple<Vector3, HashSet<int>>> mouseQ = mh.getQueuedMouseClicks();
+        HashSet<int> mouseButtonsPressed = mh.getMouseButtonsPressed();
         Queue<KeyCode> keyQ = kh.getQueuedKeys();
         HashSet<KeyCode> keysPressed = kh.getPressedkeys();
-        inputActuator.acceptInput(keyQ, mouseQ, keysPressed, kab, controlHandler);
+        inputActuator.acceptInput(keyQ, mouseQ, keysPressed, mouseButtonsPressed, kab, controlHandler);
         mouseQ.Clear();
         keyQ.Clear();
 

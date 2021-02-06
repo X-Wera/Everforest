@@ -38,7 +38,9 @@ public class KeyMove
             }
 
             Vector2 movement = new Vector2(velx, vely);
-            o.GetComponent<Rigidbody2D>().AddForce(movement * speed);
+            //o.GetComponent<Rigidbody2D>().AddForce(movement * speed);
+            Vector3 position = Vector3.MoveTowards(o.GetComponent<Rigidbody2D>().position, o.GetComponent<Rigidbody2D>().position + movement, o.GetComponent<StatsHolder>().getSpeed());
+            o.GetComponent<Rigidbody2D>().MovePosition(position);
 
             velx = 0;
             vely = 0;

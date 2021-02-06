@@ -20,7 +20,7 @@ public class StatsHolder : MonoBehaviour
         armor.setArmored(true);
         armor.setArmorLevel(1);
 
-        speed.setSpeed(20f);
+        speed.setSpeed(0.25f);
     }
     public float getSpeed()
     {
