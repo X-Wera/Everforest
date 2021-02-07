@@ -14,8 +14,11 @@ public class MouseHandler
     {
         if (e.type.Equals(EventType.MouseUp))
         {
+            if (e.button.Equals(0))
+            {
+                GameObject.Find("LastClick").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
             mouseButtonsPressed.Remove(e.button);
-            GameObject.Find("LastClick").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
         if (e.type.Equals(EventType.MouseDown))
         {
