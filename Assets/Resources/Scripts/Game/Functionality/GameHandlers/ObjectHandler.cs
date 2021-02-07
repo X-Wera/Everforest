@@ -40,7 +40,8 @@ public class ObjectHandler : MonoBehaviour
         if (c)
         {
             controlHandler.addObject(o);
-        } else if (!c)
+        }
+        else if (!c)
         {
             controlHandler.removeObject(o);
         }

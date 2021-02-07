@@ -43,7 +43,7 @@ public class InputHandler : MonoBehaviour
 
     void OnGUI()
     {
-        GameObject.Find("CursorPosition").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
 
         Event e = Event.current;
 
@@ -56,6 +56,8 @@ public class InputHandler : MonoBehaviour
         {
             kh.keyAction(e);
         }
+
+        GameObject.Find("CursorPosition").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     public void addControlHandler(ControlHandler c)
