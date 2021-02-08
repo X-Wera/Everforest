@@ -10,6 +10,22 @@ public class KeyMove
     float velx = 0, vely = 0;
 
 
+    public bool checkIfActionsListed(HashSet<Action> inp)
+    {
+        whichArrowsArePressed(inp);
+        if (u && d && l && r)
+        {
+            return false;
+        }
+        if (!u && !d && !l && !r)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     public bool doit(GameObject o, HashSet<Action> inp)
     {
         if (o.GetComponent<Rigidbody2D>() != null && o.GetComponent<StatsHolder>() != null && o.GetComponent<StatsHolder>() != null)
@@ -57,11 +73,7 @@ public class KeyMove
         { throw new Exception("Game Object " + o + " is missing components!"); }
     }
 
-
-
-
-
-    void whichArrowsArePressed(HashSet<Action> i)
+    private void whichArrowsArePressed(HashSet<Action> i)
     {
         u = i.Contains(Action.MoveUp);
         r = i.Contains(Action.MoveRight);

@@ -34,7 +34,10 @@ public class InputHandler : MonoBehaviour
         HashSet<int> mouseButtonsPressed = mh.getMouseButtonsPressed();
         Queue<KeyCode> keyQ = kh.getQueuedKeys();
         HashSet<KeyCode> keysPressed = kh.getPressedkeys();
-        inputActuator.acceptInput(keyQ, mouseQ, keysPressed, mouseButtonsPressed, kab, controlHandler);
+        if (getKab() != null && GetControlHandler() != null)
+        {
+            inputActuator.acceptInput(keyQ, mouseQ, keysPressed, mouseButtonsPressed, getKab(), GetControlHandler());
+        }
         mouseQ.Clear();
         keyQ.Clear();
 
@@ -43,7 +46,7 @@ public class InputHandler : MonoBehaviour
 
     void OnGUI()
     {
-        
+
 
         Event e = Event.current;
 
@@ -58,6 +61,16 @@ public class InputHandler : MonoBehaviour
         }
 
         GameObject.Find("CursorPosition").transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+
+    private KeyActionBinding getKab()
+    {
+        return kab;
+    }
+
+    private ControlHandler GetControlHandler()
+    {
+        return controlHandler;
     }
 
     public void addControlHandler(ControlHandler c)
