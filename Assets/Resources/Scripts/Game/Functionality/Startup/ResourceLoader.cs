@@ -25,7 +25,7 @@ public class ResourceLoader : MonoBehaviour
             }
 
         }
-        return null;
+        throw new Exception(nameOfImage + " Does Not Exist In Textures!");
     }
 
     public GameObject getObject(string nameOfObject)
@@ -38,7 +38,7 @@ public class ResourceLoader : MonoBehaviour
             }
 
         }
-        throw new Exception("Game Object Does Not Exist In EverForestObjects!");
+        throw new Exception(nameOfObject + " Does Not Exist In EverForestObjects!");
     }
 
     void convertAllImagesToSprites()

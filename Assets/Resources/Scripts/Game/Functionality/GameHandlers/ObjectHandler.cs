@@ -46,4 +46,9 @@ public class ObjectHandler : MonoBehaviour
             controlHandler.removeObject(o);
         }
     }
+
+    public HashSet<GameObject>  getGameObjects()
+    {
+        return GameObjects;
+    }
 }

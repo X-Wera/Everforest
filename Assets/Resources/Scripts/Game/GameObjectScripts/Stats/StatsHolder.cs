@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class StatsHolder : MonoBehaviour
 {
-    Health health;
-    Armor armor;
-    Speed speed;
+    private Health health;
+    private Armor armor;
+    private Speed speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +22,10 @@ public class StatsHolder : MonoBehaviour
 
         speed.setSpeed(0.25f);
     }
+
+
+
+    //speed
     public float getSpeed()
     {
         return speed.getSpeed();

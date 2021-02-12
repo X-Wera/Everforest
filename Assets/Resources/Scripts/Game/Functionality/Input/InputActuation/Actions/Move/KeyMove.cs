@@ -68,7 +68,6 @@ public class KeyMove
             return false;
 
         }
-
         else
         { throw new Exception("Game Object " + o + " is missing components!"); }
     }

@@ -5,47 +5,62 @@ using UnityEngine;
 
 public class MoveLogic
 {
-    public bool move(GameObject o, HashSet<Action> pressedActions, HashSet<Action> attemptedActions, HashSet<int> mouseButtonsPressed)
+    public MoveLogic(GameObject o, HashSet<Action> pressedActions, Queue<Action> attemptedActions, HashSet<int> mouseButtonsPressed)
     {
-        float speed = o.GetComponent<StatsHolder>().getSpeed();
         GameObject lastClick = GameObject.Find("LastClick");
-        Vector3 lcPosition = GameObject.Find("LastClick").transform.position;
-        Rigidbody2D objectRigidBody = o.GetComponent<Rigidbody2D>();
-        bool leftClick = mouseButtonsPressed.Contains(0);
-        bool ObjectMovedToPosition = lcPosition.Equals(objectRigidBody.transform.position);
+        if (!o.GetComponent<Status>().getStopped())
+        {
+            float speed = o.GetComponent<StatsHolder>().getSpeed();
 
-        if (leftClick)
-        {
-            moveToPoint(objectRigidBody, Camera.main.ScreenToWorldPoint(Input.mousePosition), speed);
-        }
-        if (!leftClick)
-        {
-            KeyMove km = new KeyMove();
-            if (km.checkIfActionsListed(pressedActions))
+            Vector3 lcPosition = lastClick.transform.position;
+            Rigidbody2D objectRigidBody = o.GetComponent<Rigidbody2D>();
+            bool leftClick = mouseButtonsPressed.Contains(0);
+            bool ObjectMovedToPosition = lcPosition.Equals(objectRigidBody.transform.position);
+
+            if (leftClick)
             {
-                km.doit(o, pressedActions);
-                lastClick.transform.position = o.transform.position;
+                moveToPoint(objectRigidBody, Camera.main.ScreenToWorldPoint(Input.mousePosition), speed);
+                o.GetComponent<Status>().setArrived(false);
+
             }
             else
             {
 
-                if (Vector3.Distance(lcPosition, objectRigidBody.transform.position) < speed)
+                KeyMove km = new KeyMove();
+                if (km.checkIfActionsListed(pressedActions))
                 {
-                    objectRigidBody.MovePosition(lcPosition);
+                    km.doit(o, pressedActions);
+                    lastClick.transform.position = o.transform.position;
+                    o.GetComponent<Status>().setArrived(true);
                 }
-                else if (!ObjectMovedToPosition)
+                else if (!o.GetComponent<Status>().getArrived())
                 {
-                    moveToPoint(objectRigidBody, lcPosition, speed);
-                }
-                else if (ObjectMovedToPosition)
-                {
-                    return false;
+
+                    if (Vector3.Distance(lcPosition, objectRigidBody.transform.position) < speed)
+                    {
+                        objectRigidBody.MovePosition(lcPosition);
+                        o.GetComponent<Status>().setArrived(true);
+                    }
+                    else if (!ObjectMovedToPosition)
+                    {
+                        moveToPoint(objectRigidBody, lcPosition, speed);
+                    }
                 }
             }
         }
-        return true;
+        else
+        {
+            lastClick.transform.position = o.transform.position;
+            o.GetComponent<Status>().setArrived(true);
+        }
     }
-    
+    /*
+    public void arrived()
+    {
+        GameObject.Find("LastClick").transform.position = this.gameObject.transform.position;
+    }
+    */
+
     private void moveToPoint(Rigidbody2D o, Vector3 target, float speed)
     {
         double deltaX = target.x - o.position.x;

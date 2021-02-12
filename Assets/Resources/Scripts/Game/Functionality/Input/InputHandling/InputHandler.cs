@@ -8,6 +8,7 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     ControlHandler controlHandler;
+    ObjectHandler objectHandler;
     MouseHandler mh = new MouseHandler();
     KeyHandler kh = new KeyHandler();
     KeyActionBinding kab = new KeyActionBinding();
@@ -32,14 +33,14 @@ public class InputHandler : MonoBehaviour
     {
         Queue<Tuple<Vector3, HashSet<int>>> mouseQ = mh.getQueuedMouseClicks();
         HashSet<int> mouseButtonsPressed = mh.getMouseButtonsPressed();
-        Queue<KeyCode> keyQ = kh.getQueuedKeys();
+        Stack<KeyCode> keyStack = kh.getStackedKeys();
         HashSet<KeyCode> keysPressed = kh.getPressedkeys();
         if (getKab() != null && GetControlHandler() != null)
         {
-            inputActuator.acceptInput(keyQ, mouseQ, keysPressed, mouseButtonsPressed, getKab(), GetControlHandler());
+            inputActuator.acceptInput(keyStack, mouseQ, keysPressed, mouseButtonsPressed, getKab(), GetControlHandler(),objectHandler);
         }
         mouseQ.Clear();
-        keyQ.Clear();
+        keyStack.Clear();
 
 
     }
@@ -76,5 +77,9 @@ public class InputHandler : MonoBehaviour
     public void addControlHandler(ControlHandler c)
     {
         controlHandler = c;
+    }
+    public void addObjectHandler(ObjectHandler oh)
+    {
+        objectHandler = oh;
     }
 }

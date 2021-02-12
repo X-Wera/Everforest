@@ -15,7 +15,7 @@ public class Armor : MonoBehaviour
         {
             double percentReduction = armor / 100;
 
-            if (percentReduction > 0.99 || IsNegative(percentReduction))
+            if (percentReduction < 0.99 || IsNegative(percentReduction))
             {
                 return 0;
             }

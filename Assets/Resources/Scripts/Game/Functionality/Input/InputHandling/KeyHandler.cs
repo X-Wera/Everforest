@@ -14,7 +14,7 @@ public class KeyHandler
     HashSet<KeyCode> keysPressed = new HashSet<KeyCode>();
 
     // Holds all keys that have been pressed in order of when they were received.
-    Queue<KeyCode> pressedQueue = new Queue<KeyCode>();
+    Stack<KeyCode> pressedStack = new Stack<KeyCode>();
 
     public void keyAction(Event e)
     {
@@ -30,7 +30,7 @@ public class KeyHandler
                 try
                 {
                     keysPressed.Add(key);
-                    pressedQueue.Enqueue(key);
+                    pressedStack.Push(key);
                 }
                 catch
                 {
@@ -55,9 +55,9 @@ public class KeyHandler
         shift = e.shift;
     }
 
-    public Queue<KeyCode> getQueuedKeys()
+    public Stack<KeyCode> getStackedKeys()
     {
-        return pressedQueue;
+        return pressedStack;
     }
 
     public HashSet<KeyCode> getPressedkeys()

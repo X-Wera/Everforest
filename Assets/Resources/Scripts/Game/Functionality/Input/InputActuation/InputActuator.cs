@@ -4,45 +4,52 @@ using UnityEngine;
 
 public class InputActuator
 {
-    GameObject clickedObject = null;
 
-    public void acceptInput(Queue<KeyCode> keyQ, Queue<Tuple<Vector3, HashSet<int>>> mouseQ, HashSet<KeyCode> keysPressed, HashSet<int> mouseButtonsPressed, KeyActionBinding kab, ControlHandler controlHandler)
+
+    public void acceptInput(Stack<KeyCode> keyStack, Queue<Tuple<Vector3, HashSet<int>>> mouseQ, HashSet<KeyCode> keysPressed, HashSet<int> mouseButtonsPressed, KeyActionBinding kab, ControlHandler controlHandler, ObjectHandler oh)
     {
 
-        HashSet<Action> attemptedActions = new HashSet<Action>();
-        HashSet<Action> pressedActions = new HashSet<Action>();
-
-        GameObject cObject = checkIfItemClicked(mouseQ);
-        if (cObject != null)
-        {
-            clickedObject = cObject;
-        }
-
-
-        convertInputToActions(mouseQ, keyQ, keysPressed, attemptedActions, pressedActions, kab);
-
+        Queue<Action> attemptedActions = getAttemptedActions(keyStack, kab);
+        HashSet<Action> pressedActions = getPressedActions(keysPressed, kab);
+        Queue<GameObject> clickedObjects = checkIfItemClicked(mouseQ);
+        /*
+        A lot of things will go here until I figure out how this game is gonna work.
+        */
         foreach (GameObject o in controlHandler.getControlledObjects())
         {
-            if (clickedObject != null)
-            {
-                if (o.GetComponent<Collider2D>().IsTouching(clickedObject.GetComponent<Collider2D>()))
-                {
-                    MonoBehaviour.print(o.name + " and " + clickedObject.name);
-                    GameObject.Find("LastClick").transform.position = o.transform.position;
-                    clickedObject = null;
-                }
-            }
-            bool moved = new MoveLogic().move(o, pressedActions, attemptedActions, mouseButtonsPressed);
+            checkObjectsTouched(o, oh, clickedObjects);
+            ActionLogic al = new ActionLogic();
+            al.SingleObjectAction(o, pressedActions, attemptedActions, mouseButtonsPressed, checkIfItemClicked(mouseQ));
+
         }
 
-
-        keyQ.Clear();
+        keyStack.Clear();
         mouseQ.Clear();
 
     }
-
-    private GameObject checkIfItemClicked(Queue<Tuple<Vector3, HashSet<int>>> mouseQ)
+    private void checkObjectsTouched(GameObject o, ObjectHandler oh, Queue<GameObject> clickedObjects)
     {
+        HashSet<GameObject> allGameObjects = oh.getGameObjects();
+
+        foreach (GameObject obj in allGameObjects)
+        {
+            if (o.GetComponent<Collider2D>().IsTouching(obj.GetComponent<Collider2D>()))
+            {
+                //MonoBehaviour.print(o.name + " touched " + obj.name);
+                foreach (GameObject ob in clickedObjects)
+                {
+                    obj.Equals(ob);
+                    o.GetComponent<Status>().setArrived(true);
+                }
+                //GameObject.Find("LastClick").transform.position = o.transform.position;
+
+            }
+        }
+    }
+
+    private Queue<GameObject> checkIfItemClicked(Queue<Tuple<Vector3, HashSet<int>>> mouseQ)
+    {
+        Queue<GameObject> allObjectsClickedThisUpdate = new Queue<GameObject>();
         foreach (Tuple<Vector3, HashSet<int>> clickData in mouseQ)
         {
             if (clickData.Item2.Contains(0))
@@ -53,26 +60,35 @@ public class InputActuator
                 RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePos2D), Vector2.zero);
                 if (hit.collider != null)
                 {
-                    //Debug.Log(hit.collider.gameObject.name);
-                    //hit.collider.attachedRigidbody.AddForce(Vector2.up);
-                    //MonoBehaviour.print(hit.collider.gameObject.name);
-                    return hit.collider.gameObject;
+                    if (hit.collider.gameObject != null)
+                    {
+                        allObjectsClickedThisUpdate.Enqueue(hit.collider.gameObject);
+                        //MonoBehaviour.print(hit.collider.gameObject.name);
+                    }
                 }
             }
         }
-        return null;
+        return allObjectsClickedThisUpdate;
     }
 
-    private void convertInputToActions(Queue<Tuple<Vector3, HashSet<int>>> mouseQ, Queue<KeyCode> keyQ, HashSet<KeyCode> keysPressed, HashSet<Action> attemptedActions, HashSet<Action> pressedActions, KeyActionBinding kab)
+    private Queue<Action> getAttemptedActions(Stack<KeyCode> keyQ, KeyActionBinding kab)
     {
-        // Figure out what the hell the user is doing.
+        Queue<Action> aa = new Queue<Action>();
         foreach (KeyCode key in keyQ)
         {
-            attemptedActions.Add(kab.getBoundAction(key));
+            aa.Enqueue(kab.getBoundAction(key));
         }
+        return aa;
+    }
+
+    private HashSet<Action> getPressedActions(HashSet<KeyCode> keysPressed, KeyActionBinding kab)
+    {
+        HashSet<Action> pa = new HashSet<Action>();
+
         foreach (KeyCode key in keysPressed)
         {
-            pressedActions.Add(kab.getBoundAction(key));
+            pa.Add(kab.getBoundAction(key));
         }
+        return pa;
     }
 }
