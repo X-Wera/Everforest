@@ -1,8 +1,7 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class ControlHandler : MonoBehaviour
+public class ControlHandler
 {
     readonly static HashSet<GameObject> currentlyControlled = new HashSet<GameObject>();
 

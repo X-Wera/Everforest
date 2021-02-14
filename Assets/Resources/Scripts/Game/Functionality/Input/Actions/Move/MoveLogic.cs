@@ -19,13 +19,19 @@ public class MoveLogic
 
             if (leftClick)
             {
-                moveToPoint(objectRigidBody, Camera.main.ScreenToWorldPoint(Input.mousePosition), speed);
-                o.GetComponent<Status>().setArrived(false);
-
+                if (Vector3.Distance(lcPosition, objectRigidBody.transform.position) < speed)
+                {
+                    objectRigidBody.MovePosition(lcPosition);
+                    o.GetComponent<Status>().setArrived(true);
+                }
+                else
+                {
+                    moveToPoint(objectRigidBody, Camera.main.ScreenToWorldPoint(Input.mousePosition), speed);
+                    o.GetComponent<Status>().setArrived(false);
+                }
             }
             else
             {
-
                 KeyMove km = new KeyMove();
                 if (km.checkIfActionsListed(pressedActions))
                 {
@@ -54,6 +60,7 @@ public class MoveLogic
             o.GetComponent<Status>().setArrived(true);
         }
     }
+
     /*
     public void arrived()
     {

@@ -74,9 +74,11 @@ public class KeyMove
 
     private void whichArrowsArePressed(HashSet<Action> i)
     {
+        /*
         u = i.Contains(Action.MoveUp);
         r = i.Contains(Action.MoveRight);
         l = i.Contains(Action.MoveLeft);
         d = i.Contains(Action.MoveDown);
+        */
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InputActuator
 {
-
+    /*
 
     public void acceptInput(Stack<KeyCode> keyStack, Queue<Tuple<Vector3, HashSet<int>>> mouseQ, HashSet<KeyCode> keysPressed, HashSet<int> mouseButtonsPressed, KeyActionBinding kab, ControlHandler controlHandler, ObjectHandler oh)
     {
@@ -12,9 +12,11 @@ public class InputActuator
         Queue<Action> attemptedActions = getAttemptedActions(keyStack, kab);
         HashSet<Action> pressedActions = getPressedActions(keysPressed, kab);
         Queue<GameObject> clickedObjects = checkIfItemClicked(mouseQ);
-        /*
+
+        
         A lot of things will go here until I figure out how this game is gonna work.
-        */
+        
+
         foreach (GameObject o in controlHandler.getControlledObjects())
         {
             checkObjectsTouched(o, oh, clickedObjects);
@@ -76,7 +78,7 @@ public class InputActuator
         Queue<Action> aa = new Queue<Action>();
         foreach (KeyCode key in keyQ)
         {
-            aa.Enqueue(kab.getBoundAction(key));
+            //aa.Enqueue(kab.getBoundAction(key));
         }
         return aa;
     }
@@ -87,8 +89,9 @@ public class InputActuator
 
         foreach (KeyCode key in keysPressed)
         {
-            pa.Add(kab.getBoundAction(key));
+            //pa.Add(kab.getBoundAction(key));
         }
         return pa;
     }
+*/
 }

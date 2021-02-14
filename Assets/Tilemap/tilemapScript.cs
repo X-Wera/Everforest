@@ -8,10 +8,6 @@ public class tilemapScript : MonoBehaviour
 
     void Start()
     {
-        int i = 0;
-        int colunms = 0;
-        int rows = 0;
-        string xxx = "";
         Tilemap tilemap = GetComponent<Tilemap>();
 
         BoundsInt bounds = tilemap.cellBounds;
@@ -24,16 +20,8 @@ public class tilemapScript : MonoBehaviour
                 TileBase tile = allTiles[x + y * bounds.size.x];
                 if (tile != null)
                 {
-                    xxx += ("x:" + x + " y:" + y + " tile:" + tile.name + System.Environment.NewLine);
-                    i++;
-                    colunms = x;
-                    rows = y;
                 }
             }
         }
-        print(xxx);
-        print("Total Tiles = " + i);
-        print("Total Colunms = " + colunms);
-        print("Total Rows = " + rows);
     }
 }
