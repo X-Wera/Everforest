@@ -1,45 +1,46 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionBinding
 {
     // Keys
-    Dictionary<KeyCode, KeyAction> BoundKeys = new Dictionary<KeyCode, KeyAction>();
-    public bool bindKeyToAction(KeyCode key, KeyAction action)
+    Dictionary<Tuple<KeyCode, EventModifiers>, KeyAction> BoundKeys = new Dictionary<Tuple<KeyCode, EventModifiers>, KeyAction>();
+    public bool bindKeyToAction(KeyCode key, EventModifiers modifiers, KeyAction action)
     {
-        if (!isKeyBound(key))
+        if (!isKeyBound(new Tuple<KeyCode, EventModifiers>(key, modifiers)))
         {
-            BoundKeys.Add(key, action);
+            BoundKeys.Add(new Tuple<KeyCode, EventModifiers>(key, modifiers), action);
             return false;
         }
         else
         {
-            BoundKeys[key] = action;
+            BoundKeys[new Tuple<KeyCode, EventModifiers>(key, modifiers)] = action;
             return true;
         }
     }
-    public bool unbindKey(KeyCode key)
+    public bool unbindKey(KeyCode key, EventModifiers modifiers)
     {
-        return BoundKeys.Remove(key);
+        return BoundKeys.Remove(new Tuple<KeyCode, EventModifiers>(key, modifiers));
     }
 
-    public KeyAction getKeysBoundAction(KeyCode key)
+    public KeyAction getKeysBoundAction(KeyCode key, EventModifiers modifiers)
     {
         KeyAction value = KeyAction.NoAction;
-        BoundKeys.TryGetValue(key, out value);
+        BoundKeys.TryGetValue(new Tuple<KeyCode, EventModifiers>(key, modifiers), out value);
         return value;
     }
-    public HashSet<KeyCode> getActionsBoundKeys(KeyAction a)
+    public HashSet<Tuple<KeyCode, EventModifiers>> getActionsBoundKeys(KeyAction a)
     {
-        HashSet<KeyCode> actionsBoundKeys = new HashSet<KeyCode>();
-        foreach (KeyValuePair<KeyCode, KeyAction> kvp in BoundKeys)
+        HashSet<Tuple<KeyCode, EventModifiers>> actionsBoundKeys = new HashSet<Tuple<KeyCode, EventModifiers>>();
+        foreach (KeyValuePair<Tuple<KeyCode, EventModifiers>, KeyAction> kvp in BoundKeys)
             if (kvp.Value.Equals(a))
                 actionsBoundKeys.Add(kvp.Key);
         return actionsBoundKeys;
     }
 
-    public bool isKeyBound(KeyCode key)
+    public bool isKeyBound(Tuple<KeyCode, EventModifiers> key)
     {
         return BoundKeys.ContainsKey(key);
     }
@@ -48,56 +49,58 @@ public class ActionBinding
         return BoundKeys.ContainsValue(a);
     }
 
-    public Dictionary<KeyCode, KeyAction> getAllKeyActionBindings()
+    public Dictionary<Tuple<KeyCode, EventModifiers>, KeyAction> getAllKeyActionBindings()
     {
         return BoundKeys;
     }
 
     // Mouse
-    Dictionary<int, MouseAction> BoundMouseButtons = new Dictionary<int, MouseAction>();
-    public bool bindMouseButtonToAction(int button, MouseAction action)
+    Dictionary<Tuple<int, EventModifiers>, MouseAction> BoundMouseButtons = new Dictionary<Tuple<int, EventModifiers>, MouseAction>();
+    public bool bindMouseButtonToAction(int button, EventModifiers modifiers, MouseAction action)
     {
-        if (!isMouseButtonBound(button))
+        Tuple<int, EventModifiers> buttonsAndModifiers = new Tuple<int, EventModifiers>(button, modifiers);
+        if (!isMouseButtonBound(button, modifiers))
         {
-            BoundMouseButtons.Add(button, action);
+            BoundMouseButtons.Add(buttonsAndModifiers, action);
             return false;
         }
         else
         {
-            BoundMouseButtons[button] = action;
+            BoundMouseButtons[buttonsAndModifiers] = action;
             return true;
         }
     }
-    public bool unbindMouseButton(int button)
+    public bool unbindMouseButton(int button, EventModifiers modifiers)
     {
-        return BoundMouseButtons.Remove(button);
+
+        return BoundMouseButtons.Remove(new Tuple<int, EventModifiers>(button, modifiers));
     }
 
-    public MouseAction getMouseButtonsBoundAction(int button)
+    public MouseAction getMouseButtonsBoundAction(int button, EventModifiers modifiers)
     {
         MouseAction value = MouseAction.NoAction;
-        BoundMouseButtons.TryGetValue(button, out value);
+        BoundMouseButtons.TryGetValue(new Tuple<int, EventModifiers>(button, modifiers), out value);
         return value;
     }
-    public HashSet<int> getActionsBoundKeys(MouseAction action)
+    public HashSet<Tuple<int, EventModifiers>> getActionsBoundKeys(MouseAction action)
     {
-        HashSet<int> actionsBoundMouseButtons = new HashSet<int>();
-        foreach (KeyValuePair<int, MouseAction> kvp in BoundMouseButtons)
+        HashSet<Tuple<int, EventModifiers>> actionsBoundMouseButtons = new HashSet<Tuple<int, EventModifiers>>();
+        foreach (KeyValuePair<Tuple<int, EventModifiers>, MouseAction> kvp in BoundMouseButtons)
             if (kvp.Value.Equals(action))
                 actionsBoundMouseButtons.Add(kvp.Key);
         return actionsBoundMouseButtons;
     }
 
-    public bool isMouseButtonBound(int button)
+    public bool isMouseButtonBound(int button, EventModifiers modifiers)
     {
-        return BoundMouseButtons.ContainsKey(button);
+        return BoundMouseButtons.ContainsKey(new Tuple<int, EventModifiers>(button, modifiers));
     }
     public bool isMouseActionBound(MouseAction action)
     {
         return BoundMouseButtons.ContainsValue(action);
     }
 
-    public Dictionary<int, MouseAction> getAllMouseActionBindings()
+    public Dictionary<Tuple<int, EventModifiers>, MouseAction> getAllMouseActionBindings()
     {
         return BoundMouseButtons;
     }

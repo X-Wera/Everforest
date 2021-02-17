@@ -4,8 +4,10 @@ using UnityEngine;
 
 public enum MouseAction
 {
-    NoAction, PrimaryAction, SecondaryAction, TertiaryAction
-
+    NoAction,
+    PrimaryAction, PrimaryActionShift, PrimaryActionControl, PrimaryActionAlt, PrimaryActionCommand, PrimaryActionFunction,
+    SecondaryAction, SecondaryActionShift, SecondaryActionControl, SecondaryActionAlt, SecondaryActionCommand, SecondaryActionFunction,
+    TertiaryAction, TertiaryActionShift, TertiaryActionControl, TertiaryActionAlt, TertiaryActionCommand, TertiaryActionFunction
 }
 public enum KeyAction
 {

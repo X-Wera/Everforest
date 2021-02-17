@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class KeyMove
 {
+    /*
     bool l = false, r = false, u = false, d = false;
     float speed = 0;
     float velx = 0, vely = 0;
@@ -28,7 +29,7 @@ public class KeyMove
     }
     public bool doit(GameObject o, HashSet<Action> inp)
     {
-        if (o.GetComponent<Rigidbody2D>() != null && o.GetComponent<StatsHolder>() != null && o.GetComponent<StatsHolder>() != null)
+        if (o.GetComponent<Rigidbody2D>() != null && o.GetComponent<Stats>() != null && o.GetComponent<StatsHolder>() != null)
         {
             speed = o.GetComponent<StatsHolder>().getSpeed();
             whichArrowsArePressed(inp);
@@ -74,11 +75,12 @@ public class KeyMove
 
     private void whichArrowsArePressed(HashSet<Action> i)
     {
-        /*
+        
         u = i.Contains(Action.MoveUp);
         r = i.Contains(Action.MoveRight);
         l = i.Contains(Action.MoveLeft);
         d = i.Contains(Action.MoveDown);
-        */
+        
     }
+*/
 }

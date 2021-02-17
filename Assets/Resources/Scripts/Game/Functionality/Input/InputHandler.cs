@@ -8,12 +8,12 @@ using UnityEngine.Events;
 
 public class InputHandler : MonoBehaviour
 {
-    public delegate void MouseDown(int button, Vector2 mousePos);
-    public delegate void MouseUp(int button, Vector2 mousePos);
-    public delegate void MouseDrag(int button, Vector2 mousePos);
+    public delegate void MouseDown(int button, EventModifiers modifiers, Vector2 mousePos);
+    public delegate void MouseUp(int button, EventModifiers modifiers, Vector2 mousePos);
+    public delegate void MouseDrag(int button, EventModifiers modifiers, Vector2 mousePoss);
     public delegate void ScrollWheel(Vector2 delta);
-    public delegate void KeyDown(KeyCode key);
-    public delegate void KeyUp(KeyCode key);
+    public delegate void KeyDown(KeyCode key, EventModifiers modifiers);
+    public delegate void KeyUp(KeyCode key, EventModifiers modifiers);
     //public delegate void ContextClick();
 
     public event MouseDown OnMouseDown;
@@ -24,8 +24,8 @@ public class InputHandler : MonoBehaviour
     public event KeyUp OnKeyUp;
     //public event ContextClick OnContextClick;
 
-    HashSet<int> mouseButtonsCurrentlyPressed = new HashSet<int>();
-    HashSet<KeyCode> keysCurrentlyPressed = new HashSet<KeyCode>();
+    HashSet<Tuple<int, EventModifiers>> mouseButtonsCurrentlyPressed = new HashSet<Tuple<int, EventModifiers>>();
+    HashSet<Tuple<KeyCode, EventModifiers>> keysCurrentlyPressed = new HashSet<Tuple<KeyCode, EventModifiers>>();
 
     void OnGUI()
     {
@@ -33,7 +33,7 @@ public class InputHandler : MonoBehaviour
 
         if (!e.type.Equals(EventType.Repaint) && !e.type.Equals(EventType.Layout) && !e.type.Equals(EventType.Ignore) && !e.type.Equals(EventType.Used))
         {
-            //EventModifiers modifiers = e.modifiers;
+            EventModifiers modifiers = e.modifiers;
             //string commandname = e.commandName;
             //int displayindex = e.displayIndex;
             EventType type = e.type;
@@ -47,18 +47,18 @@ public class InputHandler : MonoBehaviour
                 switch (e.type)
                 {
                     case EventType.MouseDown:
-                        mouseButtonsCurrentlyPressed.Add(button);
+                        mouseButtonsCurrentlyPressed.Add(new Tuple<int, EventModifiers>(button, modifiers));
                         if (OnMouseDown != null)
-                            OnMouseDown(button, mousePos);
+                            OnMouseDown(button, modifiers, mousePos);
                         break;
                     case EventType.MouseUp:
-                        mouseButtonsCurrentlyPressed.Remove(button);
+                        mouseButtonsCurrentlyPressed.Remove(new Tuple<int, EventModifiers>(button, modifiers));
                         if (OnMouseUp != null)
-                            OnMouseUp(button, mousePos);
+                            OnMouseUp(button, modifiers, mousePos);
                         break;
                     case EventType.MouseDrag:
                         if (OnMouseDrag != null)
-                            OnMouseDrag(button, mousePos);
+                            OnMouseDrag(button, modifiers, mousePos);
                         break;
                     case EventType.ScrollWheel:
                         if (OnScrollWheel != null)
@@ -79,14 +79,14 @@ public class InputHandler : MonoBehaviour
                 switch (e.type)
                 {
                     case EventType.KeyDown:
-                        keysCurrentlyPressed.Add(keycode);
+                        keysCurrentlyPressed.Add(new Tuple<KeyCode, EventModifiers>(keycode, modifiers));
                         if (OnKeyDown != null)
-                            OnKeyDown(keycode);
+                            OnKeyDown(keycode, modifiers);
                         break;
                     case EventType.KeyUp:
-                        keysCurrentlyPressed.Remove(keycode);
+                        keysCurrentlyPressed.Remove(new Tuple<KeyCode, EventModifiers>(keycode, modifiers));
                         if (OnKeyUp != null)
-                            OnKeyUp(keycode);
+                            OnKeyUp(keycode, modifiers);
                         break;
                     default:
                         // Ignore
@@ -129,16 +129,16 @@ public class InputHandler : MonoBehaviour
                 TouchStationary Direct manipulation device(finger, pen) stationary event (long touch down).
                 */
             }
+        }
+        //Debug.Log("Current detected event: " + Event.current);
     }
-    //Debug.Log("Current detected event: " + Event.current);
-}
 
-public HashSet<int> getMouseButtonsCurrentlyPressed()
-{
-    return mouseButtonsCurrentlyPressed;
-}
-public HashSet<KeyCode> getKeysCurrentlyPressed()
-{
-    return keysCurrentlyPressed;
-}
+    public HashSet<Tuple<int, EventModifiers>> getMouseButtonsCurrentlyPressed()
+    {
+        return mouseButtonsCurrentlyPressed;
+    }
+    public HashSet<Tuple<KeyCode, EventModifiers>> getKeysCurrentlyPressed()
+    {
+        return keysCurrentlyPressed;
+    }
 }

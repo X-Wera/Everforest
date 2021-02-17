@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveLogic
-{
+{/*
     public MoveLogic(GameObject o, HashSet<Action> pressedActions, Queue<Action> attemptedActions, HashSet<int> mouseButtonsPressed)
     {
         GameObject lastClick = GameObject.Find("LastClick");
@@ -66,7 +66,7 @@ public class MoveLogic
     {
         GameObject.Find("LastClick").transform.position = this.gameObject.transform.position;
     }
-    */
+    
 
     private void moveToPoint(Rigidbody2D o, Vector3 target, float speed)
     {
@@ -80,4 +80,5 @@ public class MoveLogic
 
         o.MovePosition(new Vector2(elx, ely));
     }
+    */
 }

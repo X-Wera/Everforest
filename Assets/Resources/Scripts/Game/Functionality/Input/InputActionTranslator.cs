@@ -3,54 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputActionTranslator : MonoBehaviour
+public class InputActionTranslator
 {
-    ActionBinding actionBinding;
+    private InputHandler inputHandler;
+    private ActionBinding actionBinding;
+
+    public InputActionTranslator(InputHandler inputHandler, ActionBinding actionBinding)
+    {
+        this.inputHandler = inputHandler;
+        this.actionBinding = actionBinding;
+    }
 
     public delegate void Configure(HashSet<KeyAction> ka, HashSet<MouseAction> ma);
 
-    public event Configure OnConfigure;
+    Queue<object> ActionQ = new Queue<object>();
 
-    Queue<Tuple<KeyAction, KeyPosition>> keyActionsQ = new Queue<Tuple<KeyAction, KeyPosition>>();
-    Queue<Tuple<MouseAction, Vector2, MouseButtonPosition>> mouseActionsQ = new Queue<Tuple<MouseAction, Vector2, MouseButtonPosition>>();
-    Queue<Vector2> scrollQ = new Queue<Vector2>();
-    Queue<ActionType> inputOrder = new Queue<ActionType>();
-    private enum ActionType
+    public Tuple<Queue<object>, HashSet<MouseAction>, HashSet<KeyAction>> getInputsReceived()
     {
-        Key, Mouse, Scroll
-    }
-
-    void Update()
-    {
-        InputHandler inputHandler = GetComponent<InputHandler>();
-
         HashSet<KeyAction> currentlyPressedKeys = new HashSet<KeyAction>();
         HashSet<MouseAction> currentlyPressedMouseButtons = new HashSet<MouseAction>();
-        foreach (KeyCode key in inputHandler.getKeysCurrentlyPressed())
+        foreach (Tuple<KeyCode, EventModifiers> pressedKeyWithModifier in inputHandler.getKeysCurrentlyPressed())
         {
-            currentlyPressedKeys.Add(actionBinding.getKeysBoundAction(key));
+            currentlyPressedKeys.Add(actionBinding.getKeysBoundAction(pressedKeyWithModifier.Item1, pressedKeyWithModifier.Item2));
         }
-        foreach (int button in inputHandler.getMouseButtonsCurrentlyPressed())
+        foreach (Tuple<int, EventModifiers> buttonsPressedWithModifiers in inputHandler.getMouseButtonsCurrentlyPressed())
         {
-            currentlyPressedMouseButtons.Add(actionBinding.getMouseButtonsBoundAction(button));
+            currentlyPressedMouseButtons.Add(actionBinding.getMouseButtonsBoundAction(buttonsPressedWithModifiers.Item1, buttonsPressedWithModifiers.Item2));
         }
-
-        OnConfigure(currentlyPressedKeys, currentlyPressedMouseButtons);
-
-        keyActionsQ.Clear();
-        mouseActionsQ.Clear();
-        scrollQ.Clear();
-        inputOrder.Clear();
-
+        Tuple<Queue<object>, HashSet<MouseAction>, HashSet<KeyAction>> inputsPackaged = new Tuple<Queue<object>, HashSet<MouseAction>, HashSet<KeyAction>>(ActionQ, currentlyPressedMouseButtons, currentlyPressedKeys);
+        ActionQ.Clear();
+        return inputsPackaged;
     }
 
     private void OnEnable()
     {
-        actionBinding = GetComponent<GameInitScript>().actionBinding;
-
-        InputHandler inputHandler = GetComponent<InputHandler>();
-        if (inputHandler == null)
-            throw new Exception(this + " Input Configuration was unable to retrieve the InputHandler script from the GameInitializerObject.");
         inputHandler.OnMouseDown += mouseDown;
         inputHandler.OnMouseUp += mouseUp;
         inputHandler.OnMouseDrag += mouseDrag;
@@ -60,9 +46,6 @@ public class InputActionTranslator : MonoBehaviour
     }
     private void OnDisable()
     {
-        InputHandler inputHandler = GetComponent<InputHandler>();
-        if (inputHandler == null)
-            throw new Exception(this + " Input Configuration was unable to retrieve the InputHandler script from the GameInitializerObject.");
         inputHandler.OnMouseDown -= mouseDown;
         inputHandler.OnMouseUp -= mouseUp;
         inputHandler.OnMouseDrag -= mouseDrag;
@@ -71,34 +54,30 @@ public class InputActionTranslator : MonoBehaviour
         inputHandler.OnScrollWheel -= scroll;
     }
 
-    private void mouseDown(int button, Vector2 mousePos)
+    private void mouseDown(int button, EventModifiers modifiers, Vector2 mousePos)
     {
-        inputOrder.Enqueue(ActionType.Mouse);
-        mouseActionsQ.Enqueue(new Tuple<MouseAction, Vector2, MouseButtonPosition>(actionBinding.getMouseButtonsBoundAction(button), mousePos, MouseButtonPosition.Down));
+        ActionQ.Enqueue(new Tuple<MouseAction, Vector2, MouseButtonPosition>(actionBinding.getMouseButtonsBoundAction(button, modifiers), mousePos, MouseButtonPosition.Down));
     }
-    private void mouseUp(int button, Vector2 mousePos)
+    private void mouseUp(int button, EventModifiers modifiers, Vector2 mousePos)
     {
-        inputOrder.Enqueue(ActionType.Mouse);
-        mouseActionsQ.Enqueue(new Tuple<MouseAction, Vector2, MouseButtonPosition>(actionBinding.getMouseButtonsBoundAction(button), mousePos, MouseButtonPosition.Up));
+        ActionQ.Enqueue(new Tuple<MouseAction, Vector2, MouseButtonPosition>(actionBinding.getMouseButtonsBoundAction(button, modifiers), mousePos, MouseButtonPosition.Up));
     }
-    private void mouseDrag(int button, Vector2 mousePos)
+    private void mouseDrag(int button, EventModifiers modifiers, Vector2 mousePos)
     {
-        inputOrder.Enqueue(ActionType.Mouse);
-        mouseActionsQ.Enqueue(new Tuple<MouseAction, Vector2, MouseButtonPosition>(actionBinding.getMouseButtonsBoundAction(button), mousePos, MouseButtonPosition.Drag));
+        ActionQ.Enqueue(new Tuple<MouseAction, Vector2, MouseButtonPosition>(actionBinding.getMouseButtonsBoundAction(button, modifiers), mousePos, MouseButtonPosition.Drag));
     }
-    private void keyDown(KeyCode key)
+
+    private void keyDown(KeyCode key, EventModifiers modifiers)
     {
-        inputOrder.Enqueue(ActionType.Key);
-        keyActionsQ.Enqueue(new Tuple<KeyAction, KeyPosition>(actionBinding.getKeysBoundAction(key), KeyPosition.Down));
+        ActionQ.Enqueue(new Tuple<KeyAction, KeyPosition>(actionBinding.getKeysBoundAction(key, modifiers), KeyPosition.Down));
     }
-    private void keyUp(KeyCode key)
+    private void keyUp(KeyCode key, EventModifiers modifiers)
     {
-        inputOrder.Enqueue(ActionType.Key);
-        keyActionsQ.Enqueue(new Tuple<KeyAction, KeyPosition>(actionBinding.getKeysBoundAction(key), KeyPosition.Up));
+        ActionQ.Enqueue(new Tuple<KeyAction, KeyPosition>(actionBinding.getKeysBoundAction(key, modifiers), KeyPosition.Up));
     }
+
     private void scroll(Vector2 delta)
     {
-        inputOrder.Enqueue(ActionType.Scroll);
-        scrollQ.Enqueue(delta);
+        ActionQ.Enqueue(delta);
     }
 }

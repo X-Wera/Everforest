@@ -5,7 +5,6 @@ using Exception = System.Exception;
 
 public class ResourceLoader : MonoBehaviour
 {
-
     public GameObject[] EverForestObjects;
 
     public GameObject getObjectPrefab(string nameOfObject)
@@ -16,7 +15,6 @@ public class ResourceLoader : MonoBehaviour
         throw new Exception(this + " FAILED:" + nameOfObject + " Does Not Exist In EverForestObjects! Failed to create object." + System.Environment.NewLine
             + "Create Object Prefab and add it to the ResourceObject.EverForestObjects Array through Unitys GUI");
     }
-
     //public Texture2D[] Textures;
     //public HashSet<Sprite> sprites = new HashSet<Sprite>();
     /*
