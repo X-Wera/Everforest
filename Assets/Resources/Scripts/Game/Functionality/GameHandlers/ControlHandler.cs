@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class ControlHandler
 {
-    readonly static HashSet<GameObject> currentlyControlled = new HashSet<GameObject>();
+    private readonly HashSet<GameObject> currentlyControlled = new HashSet<GameObject>();
 
     public void addObject(GameObject o)
     {

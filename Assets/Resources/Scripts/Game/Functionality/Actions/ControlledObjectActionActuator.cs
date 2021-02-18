@@ -43,6 +43,7 @@ public class ControlledObjectActionActuator
             if (clickedObject != null)
             {
                 //Debug.Log(clickedObject.name);
+                new Action().mouseMove(o.GetComponent<Rigidbody2D>(), Input.mousePosition, o.GetComponent<Stats>().getSpeed());
             }
             else
             {

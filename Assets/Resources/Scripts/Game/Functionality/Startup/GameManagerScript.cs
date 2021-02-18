@@ -27,6 +27,7 @@ public class GameManagerScript : MonoBehaviour
     {
         initCoreComponents();
         TestingMethodKillMeLaterImBeggingYouPLEEAAAASEEEEEEEEEE();
+        //Debug.Log("Game Created");
     }
 
     private void TestingMethodKillMeLaterImBeggingYouPLEEAAAASEEEEEEEEEE()
@@ -52,6 +53,7 @@ public class GameManagerScript : MonoBehaviour
         actionBinding.bindMouseButtonToAction(0, EventModifiers.FunctionKey, MouseAction.PrimaryActionFunction);
 
         // Creating game objects
+        objectHandler.createObject("Shop", new Vector3(-5, -3, 0));
         objectHandler.createObject("Rat", new Vector3(5, 0, 0));
         objectHandler.createObject("MainCharacter", new Vector3(5, 5, 0), true);
         GameObject obj = objectHandler.createObject("MainCharacter", new Vector3(0, 0, 0), true);
