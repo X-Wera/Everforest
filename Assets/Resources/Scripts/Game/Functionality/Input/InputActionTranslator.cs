@@ -25,6 +25,7 @@ public class InputActionTranslator
         foreach (Tuple<KeyCode, EventModifiers> pressedKeyWithModifier in inputHandler.getKeysCurrentlyPressed())
         {
             currentlyPressedKeys.Add(actionBinding.getKeysBoundAction(pressedKeyWithModifier.Item1, pressedKeyWithModifier.Item2));
+            Debug.Log(pressedKeyWithModifier);
         }
         foreach (Tuple<int, EventModifiers> buttonsPressedWithModifiers in inputHandler.getMouseButtonsCurrentlyPressed())
         {

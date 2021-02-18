@@ -258,7 +258,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maincamera: {fileID: 1926988131}
-  resourceObject: {fileID: 866600559}
   mousePosObject: {fileID: 6845702575902432102}
 --- !u!1 &1282409168
 GameObject:

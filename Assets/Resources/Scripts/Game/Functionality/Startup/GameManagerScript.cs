@@ -38,10 +38,10 @@ public class GameManagerScript : MonoBehaviour
         actionBinding.bindKeyToAction(KeyCode.A, EventModifiers.None, KeyAction.MoveLeft);
 
         // ARROW KEYS
-        actionBinding.bindKeyToAction(KeyCode.UpArrow, EventModifiers.None, KeyAction.MoveUp);
-        actionBinding.bindKeyToAction(KeyCode.RightArrow, EventModifiers.None, KeyAction.MoveRight);
-        actionBinding.bindKeyToAction(KeyCode.DownArrow, EventModifiers.None, KeyAction.MoveDown);
-        actionBinding.bindKeyToAction(KeyCode.LeftArrow, EventModifiers.None, KeyAction.MoveLeft);
+        actionBinding.bindKeyToAction(KeyCode.UpArrow, EventModifiers.FunctionKey, KeyAction.MoveUp);
+        actionBinding.bindKeyToAction(KeyCode.RightArrow, EventModifiers.FunctionKey, KeyAction.MoveRight);
+        actionBinding.bindKeyToAction(KeyCode.DownArrow, EventModifiers.FunctionKey, KeyAction.MoveDown);
+        actionBinding.bindKeyToAction(KeyCode.LeftArrow, EventModifiers.FunctionKey, KeyAction.MoveLeft);
 
         // MOUSE BUTTONS
         actionBinding.bindMouseButtonToAction(0, EventModifiers.None, MouseAction.PrimaryAction);
@@ -51,7 +51,7 @@ public class GameManagerScript : MonoBehaviour
         actionBinding.bindMouseButtonToAction(0, EventModifiers.Command, MouseAction.PrimaryActionCommand);
         actionBinding.bindMouseButtonToAction(0, EventModifiers.FunctionKey, MouseAction.PrimaryActionFunction);
 
-        // Creating shitty objects
+        // Creating game objects
         objectHandler.createObject("Rat", new Vector3(5, 0, 0));
         objectHandler.createObject("MainCharacter", new Vector3(5, 5, 0), true);
         GameObject obj = objectHandler.createObject("MainCharacter", new Vector3(0, 0, 0), true);

@@ -12,8 +12,9 @@ public class ResourceLoader : MonoBehaviour
         foreach (GameObject i in EverForestObjects)
             if (i.name.Equals(nameOfObject))
                 return i;
-        throw new Exception(this + " FAILED:" + nameOfObject + " Does Not Exist In EverForestObjects! Failed to create object." + System.Environment.NewLine
-            + "Create Object Prefab and add it to the ResourceObject.EverForestObjects Array through Unitys GUI");
+        throw new Exception("FAILED:" + nameOfObject + " does Not Exist In EverForestObjects! Failed to create object." + System.Environment.NewLine
+                          + "Create Object Prefab and add it to the ResourceObject.EverForestObjects Array through Unitys GUI " + System.Environment.NewLine
+                          + this);
     }
     //public Texture2D[] Textures;
     //public HashSet<Sprite> sprites = new HashSet<Sprite>();

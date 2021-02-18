@@ -11,7 +11,7 @@ public enum MouseAction
 }
 public enum KeyAction
 {
-    NoAction, Move, MoveUp, MoveDown, MoveRight, MoveLeft
+    NoAction, MoveUp, MoveDown, MoveRight, MoveLeft
 }
 public enum MouseButtonPosition
 {

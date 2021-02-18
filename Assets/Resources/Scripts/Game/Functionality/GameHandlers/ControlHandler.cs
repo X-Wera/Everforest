@@ -7,6 +7,11 @@ public class ControlHandler
 
     public void addObject(GameObject o)
     {
+        if (o.GetComponent<Rigidbody2D>() == null || o.GetComponent<Stats>() == null)
+        {
+            Debug.LogError(o +": Was not set Controlled. A controlled object requires both a Rigidbody2D & StatsHolder component to move. " + this);
+            return;
+        }
         currentlyControlled.Add(o);
     }
 

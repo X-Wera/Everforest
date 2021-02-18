@@ -33,6 +33,7 @@ public class InputHandler : MonoBehaviour
 
         if (!e.type.Equals(EventType.Repaint) && !e.type.Equals(EventType.Layout) && !e.type.Equals(EventType.Ignore) && !e.type.Equals(EventType.Used))
         {
+
             EventModifiers modifiers = e.modifiers;
             //string commandname = e.commandName;
             //int displayindex = e.displayIndex;
@@ -75,22 +76,25 @@ public class InputHandler : MonoBehaviour
                 //char character = e.character;
                 KeyCode keycode = e.keyCode;
                 //bool numeric = e.numeric;
-
-                switch (e.type)
+                if (e.keyCode != KeyCode.None)
                 {
-                    case EventType.KeyDown:
-                        keysCurrentlyPressed.Add(new Tuple<KeyCode, EventModifiers>(keycode, modifiers));
-                        if (OnKeyDown != null)
-                            OnKeyDown(keycode, modifiers);
-                        break;
-                    case EventType.KeyUp:
-                        keysCurrentlyPressed.Remove(new Tuple<KeyCode, EventModifiers>(keycode, modifiers));
-                        if (OnKeyUp != null)
-                            OnKeyUp(keycode, modifiers);
-                        break;
-                    default:
-                        // Ignore
-                        break;
+                    switch (e.type)
+                    {
+
+                        case EventType.KeyDown:
+                            keysCurrentlyPressed.Add(new Tuple<KeyCode, EventModifiers>(keycode, modifiers));
+                            if (OnKeyDown != null)
+                                OnKeyDown(keycode, modifiers);
+                            break;
+                        case EventType.KeyUp:
+                            keysCurrentlyPressed.Remove(new Tuple<KeyCode, EventModifiers>(keycode, modifiers));
+                            if (OnKeyUp != null)
+                                OnKeyUp(keycode, modifiers);
+                            break;
+                        default:
+                            // Ignore
+                            break;
+                    }
                 }
             }
             else
