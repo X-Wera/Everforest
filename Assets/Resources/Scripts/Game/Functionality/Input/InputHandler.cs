@@ -31,9 +31,8 @@ public class InputHandler : MonoBehaviour
     {
         Event e = Event.current;
 
-        if (!e.type.Equals(EventType.Repaint) && !e.type.Equals(EventType.Layout) && !e.type.Equals(EventType.Ignore) && !e.type.Equals(EventType.Used))
+        if (e.type != (EventType.Repaint) && e.type != (EventType.Layout) && e.type != (EventType.Ignore) && e.type != (EventType.Used))
         {
-
             EventModifiers modifiers = e.modifiers;
             //string commandname = e.commandName;
             //int displayindex = e.displayIndex;
@@ -69,7 +68,6 @@ public class InputHandler : MonoBehaviour
                         // Ignore
                         break;
                 }
-
             }
             else if (e.isKey)
             {

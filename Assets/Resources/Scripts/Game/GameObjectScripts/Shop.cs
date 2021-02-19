@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class Shop : MonoBehaviour
 {
+    private GameManagerScript gameManager;
     HashSet<GameObject> currentlyInReach = new HashSet<GameObject>();
     GameObject menu;
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void Start()
     {
-        currentlyInReach.Add(collider.gameObject);
+        gameManager = GameObject.Find("GameManagerObject").GetComponent<GameManagerScript>();
+    }
 
-        GameObject collidedObject = collider.gameObject;
-        //Debug.Log(collidedObject + " touched me!");
-        if (menu == null)
+    void OnMouseDown()
+    {
+        //Debug.Log(this + " clicked.");
+    }
+
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        if (collider.gameObject.tag == "Player")
         {
-            createMenu();
+            currentlyInReach.Add(collider.gameObject);
+            GameObject collidedObject = collider.gameObject;
+            if (menu == null)
+            {
+                menu = createMenu();
+            }
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collider)
@@ -24,22 +37,20 @@ public class Shop : MonoBehaviour
         currentlyInReach.Remove(collider.gameObject);
         if (currentlyInReach.Count == 0)
         {
-            Destroy(menu);
-            menu = null;
+            gameManager.getObjectHandler().destroyObject(menu);
         }
     }
 
-    private void createMenu()
+    private GameObject createMenu()
     {
-        menu = new GameObject();
-        menu.transform.localScale = menu.transform.localScale / 3;
-        SpriteRenderer spriteRenderer = menu.AddComponent<SpriteRenderer>() as SpriteRenderer;
-        ResourceLoader resource = GameObject.Find("ResourceObject").GetComponent<ResourceLoader>();
-        Sprite sprite = resource.getSprite("meat");
-        spriteRenderer.sprite = sprite;
-        Vector3 offset = new Vector3(0, 1.5f, 0);
-        spriteRenderer.transform.position = this.transform.position + offset;
+        GameObject menu = null;
+        if (gameManager != null)
+            if (gameManager.getObjectHandler() != null)
+            {
+                menu = gameManager.getObjectHandler().createObject("ShopMenu", this.gameObject.transform.position + new Vector3(0, 0.75f, 0));
+                menu.GetComponent<ArtificialAxis>().set(this.gameObject.transform.position.y + 0.1f); ;
+            }
 
-        //menu.AddComponent<meat>() as Sprite;
+        return menu;
     }
 }

@@ -10,7 +10,7 @@ public class CameraScript : MonoBehaviour
     {
         if (currenltyFocusedObject != null)
         {
-            this.transform.position = currenltyFocusedObject.transform.position;
+            this.transform.position = new Vector3(currenltyFocusedObject.transform.position.x, currenltyFocusedObject.transform.position.y, this.transform.position.z);
         }
     }
 

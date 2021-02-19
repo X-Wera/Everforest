@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - ControllableObject
+  - Building
+  - IGMenu
+  - Ground
+  - MOB
+  - Functionality
   layers:
   - Default
   - TransparentFX

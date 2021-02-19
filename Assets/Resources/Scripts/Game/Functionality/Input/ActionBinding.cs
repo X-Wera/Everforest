@@ -35,7 +35,7 @@ public class ActionBinding
     {
         HashSet<Tuple<KeyCode, EventModifiers>> actionsBoundKeys = new HashSet<Tuple<KeyCode, EventModifiers>>();
         foreach (KeyValuePair<Tuple<KeyCode, EventModifiers>, KeyAction> kvp in BoundKeys)
-            if (kvp.Value.Equals(a))
+            if (kvp.Value == (a))
                 actionsBoundKeys.Add(kvp.Key);
         return actionsBoundKeys;
     }
@@ -86,7 +86,7 @@ public class ActionBinding
     {
         HashSet<Tuple<int, EventModifiers>> actionsBoundMouseButtons = new HashSet<Tuple<int, EventModifiers>>();
         foreach (KeyValuePair<Tuple<int, EventModifiers>, MouseAction> kvp in BoundMouseButtons)
-            if (kvp.Value.Equals(action))
+            if (kvp.Value == (action))
                 actionsBoundMouseButtons.Add(kvp.Key);
         return actionsBoundMouseButtons;
     }

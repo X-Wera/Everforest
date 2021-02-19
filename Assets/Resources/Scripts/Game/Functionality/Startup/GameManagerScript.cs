@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public GameObject maincamera;
-    public GameObject mousePosObject;
-    private GameObject resourceObject;
+    public GameObject mainCamera;
+    public GameObject groundObject;
+    public GameObject resourceObject;
 
     public ActionBinding actionBinding;
     private ControlHandler controlHandler;
@@ -53,28 +53,28 @@ public class GameManagerScript : MonoBehaviour
         actionBinding.bindMouseButtonToAction(0, EventModifiers.FunctionKey, MouseAction.PrimaryActionFunction);
 
         // Creating game objects
-        objectHandler.createObject("Shop", new Vector3(-5, -3, 0));
-        objectHandler.createObject("Rat", new Vector3(5, 0, 0));
-        objectHandler.createObject("MainCharacter", new Vector3(5, 5, 0), true);
+        objectHandler.createObject("Shop", new Vector3(-1f, -1f, 0));
+        objectHandler.createObject("Rat", new Vector3(1f, 0, 0));
+        objectHandler.createObject("MainCharacter", new Vector3(1f, 1f, 0), true);
         GameObject obj = objectHandler.createObject("MainCharacter", new Vector3(0, 0, 0), true);
 
-        maincamera.GetComponent<CameraScript>().setFocused(obj);
+        mainCamera.GetComponent<CameraScript>().setFocused(obj);
     }
 
     private void initCoreComponents()
     {
-        resourceObject = GameObject.Find("ResourceObject");
-        if (resourceObject == null)
-            throw new Exception("THE RESOURCE OBJECT DOES NOT EXIST! None of Everforests resources can be referenced (or loaded) without an existing ResourceObject. " + System.Environment.NewLine
-                + this);
-
-        updateHandler = this.gameObject.AddComponent<UpdateHandler>() as UpdateHandler;
         actionBinding = new ActionBinding();
         controlHandler = new ControlHandler();
         inputHandler = this.gameObject.AddComponent<InputHandler>() as InputHandler;
         inputActionTranslator = new InputActionTranslator(inputHandler, actionBinding);
         resource = resourceObject.GetComponent<ResourceLoader>();
         objectHandler = new ObjectHandler(this.controlHandler, this.resource);
+        updateHandler = this.gameObject.AddComponent<UpdateHandler>() as UpdateHandler;
         coaa = new ControlledObjectActionActuator(updateHandler, inputActionTranslator, controlHandler);
+    }
+
+    public ObjectHandler getObjectHandler()
+    {
+        return objectHandler;
     }
 }

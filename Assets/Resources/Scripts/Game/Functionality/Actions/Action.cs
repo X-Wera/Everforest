@@ -5,49 +5,83 @@ using UnityEngine;
 
 public class Action
 {
+
     public void moveCardinal(GameObject o, bool upPressed, bool rightPressed, bool downPressed, bool leftPressed)
     {
-        Rigidbody2D rigidBod = o.GetComponent<Rigidbody2D>();
-        Stats stats = o.GetComponent<Stats>();
+        Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
+        float strength = o.GetComponent<Stats>().getStrength();
         float velx = 0f, vely = 0f;
-        if (leftPressed)
-        {
-            velx--;
-        }
-        if (rightPressed)
-        {
-            velx++;
-        }
-        if (upPressed)
-        {
-            vely++;
-        }
-        if (downPressed)
-        {
-            vely--;
-        }
 
-        Vector2 movement = new Vector2(velx, vely);
-        Vector2 position = Vector2.MoveTowards(rigidBod.position, rigidBod.position + movement, stats.getSpeed());
-        rigidBod.MovePosition(position);
+        if (upPressed) vely++;
+        if (rightPressed) velx++;
+        if (downPressed) vely--;
+        if (leftPressed) velx--;
 
+        if (upPressed && downPressed)
+            attemptToStopMoving(o);
+
+        if (leftPressed && rightPressed)
+            attemptToStopMoving(o);
+
+        // Creates a point 1 unit away from object in a cardinal or intercardinal direction.
+        Vector2 position = Vector2.MoveTowards(rigidBody.position, rigidBody.position + new Vector2(velx, vely), 1);
+
+        // Accelerates based off strength
+        rigidBody.AddForce((position - rigidBody.position) * strength);
     }
-    public void mouseMove(Rigidbody2D rb, Vector2 target, float speed)
+
+    public void mouseMove(GameObject o, Vector2 mousePos)
     {
-        moveToPoint(rb, target, speed);
+        moveToPoint(o, mousePos);
     }
 
-    private void moveToPoint(Rigidbody2D o, Vector2 target, float speed)
+    public void attemptToStopMoving(GameObject o)
     {
-        Vector2 t = Camera.main.ScreenToWorldPoint(target);
-        double deltaX = t.x - o.position.x;
-        double deltaY = t.y - o.position.y;
-
-        double direction = Math.Atan2(deltaY, deltaX);
-
-        float elx = (float)(o.position.x + (speed * Math.Cos(direction)));
-        float ely = (float)(o.position.y + (speed * Math.Sin(direction)));
-
-        o.MovePosition(new Vector2(elx, ely));
+        // Slowes down based on agilty
+        o.GetComponent<Rigidbody2D>().drag = o.GetComponent<Stats>().getAgility();
     }
+
+    public void moving(GameObject o)
+    {
+        //Debug.Log(o.GetComponent<Rigidbody2D>().velocity.magnitude);
+        o.GetComponent<Rigidbody2D>().drag = 1;
+    }
+
+    private void moveToPoint(GameObject o, Vector2 mousePos)
+    {
+        Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
+        float strength = o.GetComponent<Stats>().getStrength();
+        if (mainCamera != null)
+        {
+            Vector2 target = mainCamera.ScreenToWorldPoint(mousePos);
+
+            // Creates a point 1 unit away from object in a 360 degree direction.
+            double deltaX = target.x - rigidBody.position.x;
+            double deltaY = target.y - rigidBody.position.y;
+            double directionToPoint = Math.Atan2(deltaY, deltaX);
+            float dtpX = (float)(rigidBody.position.x + (1 * Math.Cos(directionToPoint)));
+            float dtpY = (float)(rigidBody.position.y + (1 * Math.Sin(directionToPoint)));
+            Vector2 direction = new Vector2(dtpX, dtpY) - rigidBody.position;
+            //Debug.Log(direction);
+
+            // Accelerates based off agility
+            rigidBody.AddForce(direction * strength);
+        }
+
+    }
+
+    /*
+     * AS LONG AS THE LINEAR DRAG COEFFICIENT IS >= 1  SPEED WILL NEVER ACCELERATE PAST FORCE APPLIED MAKING THIS FUNCTION SUPERFLUOUS
+     * 
+    private bool limitSpeedToMaxSpeed(Rigidbody2D rigidbody, float maxSpeed)
+    {
+        if (rigidbody.velocity.magnitude > maxSpeed)
+        {
+            rigidbody.velocity = rigidbody.velocity.normalized * maxSpeed;
+            return true;
+        }
+        return false;
+    }
+    */
 }
