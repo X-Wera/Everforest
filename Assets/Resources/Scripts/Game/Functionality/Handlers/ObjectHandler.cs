@@ -14,20 +14,31 @@ public class ObjectHandler
         this.resource = resource;
     }
 
+    public GameObject createObject(string objectTypeName, Vector3 creationPosition, float height, bool controlled)
+    {
+        GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
+        initializedObject.GetComponent<Stats>().height = height;
+        gameObjects.Add(initializedObject);
+        return initializedObject;
+    }
+    public GameObject createObject(string objectTypeName, Vector3 creationPosition, float height)
+    {
+        GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
+        initializedObject.GetComponent<Stats>().height = height;
+        gameObjects.Add(initializedObject);
+        return initializedObject;
+    }
     public GameObject createObject(string objectTypeName, Vector3 creationPosition, bool controlled)
     {
         GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
+        if (controlled) { controlHandler.addObject(initializedObject); }
         gameObjects.Add(initializedObject);
-        if (controlled)
-            controlHandler.addObject(initializedObject);
-        initializedObject.AddComponent<ArtificialAxis>();
         return initializedObject;
     }
     public GameObject createObject(string objectTypeName, Vector3 creationPosition)
     {
         GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
         gameObjects.Add(initializedObject);
-        initializedObject.AddComponent<ArtificialAxis>();
         return initializedObject;
     }
 
@@ -46,10 +57,17 @@ public class ObjectHandler
         else
             controlHandler.removeObject(o);
     }
-
     public void setControlled(GameObject o)
     {
         controlHandler.addObject(o);
+    }
+
+    public GameObject getGameObject(GameObject o)
+    {
+        foreach (GameObject go in gameObjects)
+            if (go.Equals(o))
+                return go;
+        return null;
     }
 
     public HashSet<GameObject> getGameObjects()

@@ -9,7 +9,7 @@ public class Action
     public void moveCardinal(GameObject o, bool upPressed, bool rightPressed, bool downPressed, bool leftPressed)
     {
         Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
-        float strength = o.GetComponent<Stats>().getStrength();
+        float strength = o.GetComponent<CharacterStats>().strength;
         float velx = 0f, vely = 0f;
 
         if (upPressed) vely++;
@@ -38,7 +38,7 @@ public class Action
     public void attemptToStopMoving(GameObject o)
     {
         // Slowes down based on agilty
-        o.GetComponent<Rigidbody2D>().drag = o.GetComponent<Stats>().getAgility();
+        o.GetComponent<Rigidbody2D>().drag = o.GetComponent<CharacterStats>().agility;
     }
 
     public void moving(GameObject o)
@@ -51,7 +51,7 @@ public class Action
     {
         Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
-        float strength = o.GetComponent<Stats>().getStrength();
+        float strength = o.GetComponent<CharacterStats>().strength;
         if (mainCamera != null)
         {
             Vector2 target = mainCamera.ScreenToWorldPoint(mousePos);
