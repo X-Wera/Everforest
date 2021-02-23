@@ -14,11 +14,12 @@ public class ObjectHandler
         this.resource = resource;
     }
 
-    public GameObject createObject(string objectTypeName, Vector3 creationPosition, float height, bool controlled)
+    public GameObject createObject(string objectTypeName, Vector3 creationPosition, bool controlled, float height)
     {
         GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
         initializedObject.GetComponent<Stats>().height = height;
         gameObjects.Add(initializedObject);
+        if (controlled) { controlHandler.addObject(initializedObject); }
         return initializedObject;
     }
     public GameObject createObject(string objectTypeName, Vector3 creationPosition, float height)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class tilemapScript : MonoBehaviour
+public class GroundScript : MonoBehaviour
 {
 
     void Start()

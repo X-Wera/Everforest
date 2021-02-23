@@ -6,7 +6,7 @@ public class ZDepth : MonoBehaviour
 {
     private ObjectHandler objectHandler;
     private GameObject groundObject;
-    private GameObject mainCamera;
+    private GameObject mainCameraObject;
 
     float farthestObjectOutDistance;
     float closestObjectInDistance;
@@ -15,7 +15,7 @@ public class ZDepth : MonoBehaviour
     {
         objectHandler = this.gameObject.GetComponent<GameManagerScript>().getObjectHandler();
         groundObject = this.gameObject.GetComponent<GameManagerScript>().groundObject;
-        mainCamera = this.gameObject.GetComponent<GameManagerScript>().mainCamera;
+        mainCameraObject = this.gameObject.GetComponent<GameManagerScript>().mainCameraObject;
     }
 
     private void Update()
@@ -25,8 +25,8 @@ public class ZDepth : MonoBehaviour
 
     private void zAxisDepthAlignment()
     {
-        farthestObjectOutDistance = mainCamera.transform.position.y;
-        closestObjectInDistance = mainCamera.transform.position.y;
+        farthestObjectOutDistance = mainCameraObject.transform.position.y;
+        closestObjectInDistance = mainCameraObject.transform.position.y;
 
         foreach (GameObject o in objectHandler.getGameObjects())
         {
@@ -50,7 +50,7 @@ public class ZDepth : MonoBehaviour
 
     private void setFurthestAndClosest(GameObject o, float zDepth)
     {
-        if (o.transform.position.y >= mainCamera.transform.position.y - mainCamera.GetComponent<Camera>().orthographicSize && o.transform.position.y <= mainCamera.transform.position.y + mainCamera.GetComponent<Camera>().orthographicSize)
+        if (o.transform.position.y >= mainCameraObject.transform.position.y - mainCameraObject.GetComponent<Camera>().orthographicSize && o.transform.position.y <= mainCameraObject.transform.position.y + mainCameraObject.GetComponent<Camera>().orthographicSize)
         {
             if (zDepth >= farthestObjectOutDistance)
                 farthestObjectOutDistance = zDepth;
@@ -63,7 +63,7 @@ public class ZDepth : MonoBehaviour
     private void trimClipping()
     {
         groundObject.transform.position = new Vector3(groundObject.transform.position.x, groundObject.transform.position.y, farthestObjectOutDistance + 1);
-        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, closestObjectInDistance - 1);
-        mainCamera.GetComponent<Camera>().farClipPlane = groundObject.transform.position.z - mainCamera.transform.position.z + 1;
+        mainCameraObject.transform.position = new Vector3(mainCameraObject.transform.position.x, mainCameraObject.transform.position.y, closestObjectInDistance - 1);
+        mainCameraObject.GetComponent<Camera>().farClipPlane = groundObject.transform.position.z - mainCameraObject.transform.position.z + 1;
     }
 }

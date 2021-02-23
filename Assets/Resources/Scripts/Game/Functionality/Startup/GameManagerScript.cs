@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public GameObject mainCamera;
+    public GameObject mainCameraObject;
     public GameObject groundObject;
     public GameObject resourceObject;
 
     public ActionBinding actionBinding;
     private ControlHandler controlHandler;
+    private EnvironmentManager environmentManager;
     private InputActionTranslator inputActionTranslator;
     private InputHandler inputHandler;
     private ObjectHandler objectHandler;
@@ -27,10 +28,13 @@ public class GameManagerScript : MonoBehaviour
     {
         initCoreComponents();
         TestingMethodKillMeLaterImBeggingYouPLEEAAAASEEEEEEEEEE();
+        environmentManager.initializeEnvironment();
     }
 
     private void TestingMethodKillMeLaterImBeggingYouPLEEAAAASEEEEEEEEEE()
     {
+        // NEED TO GET ACTION BINDINGS FROM MAIN MENU AND BEFORE THAT THEY SHOULD ALL BE SET TO WHAT WE WANT THE DEFAULT KEYS TO BE.
+
         // WASD
         actionBinding.bindKeyToAction(KeyCode.W, EventModifiers.None, KeyAction.MoveUp);
         actionBinding.bindKeyToAction(KeyCode.D, EventModifiers.None, KeyAction.MoveRight);
@@ -50,14 +54,6 @@ public class GameManagerScript : MonoBehaviour
         actionBinding.bindMouseButtonToAction(0, EventModifiers.Alt, MouseAction.PrimaryActionAlt);
         actionBinding.bindMouseButtonToAction(0, EventModifiers.Command, MouseAction.PrimaryActionCommand);
         actionBinding.bindMouseButtonToAction(0, EventModifiers.FunctionKey, MouseAction.PrimaryActionFunction);
-
-        // Creating game objects
-        objectHandler.createObject("Shop", new Vector3(-1f, -1f, 0));
-        objectHandler.createObject("Rat", new Vector3(1f, 0, 0));
-
-        GameObject obj = objectHandler.createObject("MainCharacter", new Vector3(0, 0, 0), true);
-
-        mainCamera.GetComponent<CameraScript>().setFocused(obj);
     }
 
     private void initCoreComponents()
@@ -70,6 +66,7 @@ public class GameManagerScript : MonoBehaviour
         objectHandler = new ObjectHandler(this.controlHandler, this.resource);
         updateHandler = this.gameObject.AddComponent<UpdateHandler>() as UpdateHandler;
         coaa = new ControlledObjectActionActuator(updateHandler, inputActionTranslator, controlHandler);
+        environmentManager = new EnvironmentManager(updateHandler, objectHandler, mainCameraObject);
     }
 
     public ObjectHandler getObjectHandler()
