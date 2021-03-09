@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9056197588389457629}
   m_Layer: 0
   m_Name: ShopMenu
-  m_TagString: Untagged
+  m_TagString: IGMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

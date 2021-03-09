@@ -15,7 +15,7 @@ public class ZDepth : MonoBehaviour
     {
         objectHandler = this.gameObject.GetComponent<GameManagerScript>().getObjectHandler();
         groundObject = this.gameObject.GetComponent<GameManagerScript>().groundObject;
-        mainCameraObject = this.gameObject.GetComponent<GameManagerScript>().mainCameraObject;
+        mainCameraObject = GameObject.Find("MainCamera");
     }
 
     private void Update()
@@ -30,15 +30,13 @@ public class ZDepth : MonoBehaviour
 
         foreach (GameObject o in objectHandler.getGameObjects())
         {
-
             bindZToY(o);
             float zDepth = o.transform.position.y;
 
             setFurthestAndClosest(o, zDepth);
-            o.transform.position = new Vector3(o.transform.position.x, o.transform.position.y, zDepth + o.GetComponent<Stats>().height);
+            o.transform.position = new Vector3(o.transform.position.x, o.transform.position.y, zDepth + o.GetComponent<EverForestObject>().altitude);
             trimClipping();
             //Debug.Log(closestObjectInDistance + "," + farthestObjectOutDistance);
-
         }
     }
 

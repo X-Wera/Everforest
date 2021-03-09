@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 public class TheMasterControlProgram : MonoBehaviour
 {
-    public GameObject ResourceObject;
+    public GameObject resourceObject;
+    public GameObject mainCameraObject;
 
     private void Start()
     {
-        //Debug.Log("Application started");
+        MonoBehaviour.Instantiate(resourceObject.GetComponent<ResourceLoader>().getObjectPrefab("MainMenu"),
+            new Vector3(0, 0, 0), Quaternion.identity);
+        //UnityEngine.Debug.Log("Application initialized after " + Time.realtimeSinceStartup + " seconds");
     }
 
     private void OnApplicationQuit()
     {
-        //Debug.Log("Application ending after " + Time.time + " seconds");
+        //UnityEngine.Debug.Log("Application ending after " + Time.realtimeSinceStartup + " seconds");
     }
 }

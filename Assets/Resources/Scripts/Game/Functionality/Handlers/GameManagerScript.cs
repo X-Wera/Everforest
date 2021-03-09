@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public GameObject mainCameraObject;
     public GameObject groundObject;
-    public GameObject resourceObject;
+    private GameObject mainCameraObject;
 
     public ActionBinding actionBinding;
     private ControlHandler controlHandler;
@@ -21,6 +20,7 @@ public class GameManagerScript : MonoBehaviour
 
     void Start()
     {
+        mainCameraObject = GameObject.Find("MainCamera");
         initGame();
     }
 
@@ -34,6 +34,9 @@ public class GameManagerScript : MonoBehaviour
     private void TestingMethodKillMeLaterImBeggingYouPLEEAAAASEEEEEEEEEE()
     {
         // NEED TO GET ACTION BINDINGS FROM MAIN MENU AND BEFORE THAT THEY SHOULD ALL BE SET TO WHAT WE WANT THE DEFAULT KEYS TO BE.
+
+        // Escape
+        actionBinding.bindKeyToAction(KeyCode.Escape, EventModifiers.None, KeyAction.Escape);
 
         // WASD
         actionBinding.bindKeyToAction(KeyCode.W, EventModifiers.None, KeyAction.MoveUp);
@@ -58,11 +61,11 @@ public class GameManagerScript : MonoBehaviour
 
     private void initCoreComponents()
     {
+        resource = GameObject.Find("ResourceObject").GetComponent<ResourceLoader>();
         actionBinding = new ActionBinding();
         controlHandler = new ControlHandler();
         inputHandler = this.gameObject.AddComponent<InputHandler>() as InputHandler;
         inputActionTranslator = new InputActionTranslator(inputHandler, actionBinding);
-        resource = resourceObject.GetComponent<ResourceLoader>();
         objectHandler = new ObjectHandler(this.controlHandler, this.resource);
         updateHandler = this.gameObject.AddComponent<UpdateHandler>() as UpdateHandler;
         coaa = new ControlledObjectActionActuator(updateHandler, inputActionTranslator, controlHandler);

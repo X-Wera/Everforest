@@ -18,7 +18,7 @@ public class ControlledObjectActionActuator
 
     private void tick()
     {
-        Tuple<Queue<object>, HashSet<MouseAction>, HashSet<KeyAction>> inputsReceived = inputActionTranslator.getInputsReceived();
+        Tuple<HashSet<MouseAction>, HashSet<KeyAction>> inputsReceived = inputActionTranslator.getInputsReceived();
         foreach (GameObject o in controlHandler.getControlledObjects())
         {
             ActuateInput(o, inputsReceived);
@@ -26,37 +26,47 @@ public class ControlledObjectActionActuator
 
     }
 
-    private void ActuateInput(GameObject o, Tuple<Queue<object>, HashSet<MouseAction>, HashSet<KeyAction>> inputsReceived)
+    private void ActuateInput(GameObject o, Tuple<HashSet<MouseAction>, HashSet<KeyAction>> inputsReceived)
     {
-        bool primaryClicked = isPrimaryClicked(inputsReceived.Item2);
-        bool upPressed = inputsReceived.Item3.Contains(KeyAction.MoveUp);
-        bool rightPressed = inputsReceived.Item3.Contains(KeyAction.MoveRight);
-        bool downPressed = inputsReceived.Item3.Contains(KeyAction.MoveDown);
-        bool leftPressed = inputsReceived.Item3.Contains(KeyAction.MoveLeft);
-
-        bool userAttemptingToMove = isUserAttemptingToMove(primaryClicked, upPressed, rightPressed, downPressed, leftPressed);
-
-        if (!userAttemptingToMove)
-            new Action().attemptToStopMoving(o);
-        else
-            new Action().moving(o);
-
-        if (primaryClicked)
+        if (inputsReceived.Item2.Contains(KeyAction.Escape))
         {
-            InputTool inputTool = new InputTool();
-            GameObject clickedObject = inputTool.checkIfItemAtScreenPosition(Input.mousePosition);
+            Time.timeScale = 0;
+            MonoBehaviour.Instantiate(GameObject.Find("ResourceObject").GetComponent<ResourceLoader>().getObjectPrefab("InGameMenu"),
+new Vector3(0, 0, 0), Quaternion.identity);
+        }
+        else
+        {
+            bool primaryClicked = isPrimaryClicked(inputsReceived.Item1);
+            bool upPressed = inputsReceived.Item2.Contains(KeyAction.MoveUp);
+            bool rightPressed = inputsReceived.Item2.Contains(KeyAction.MoveRight);
+            bool downPressed = inputsReceived.Item2.Contains(KeyAction.MoveDown);
+            bool leftPressed = inputsReceived.Item2.Contains(KeyAction.MoveLeft);
 
-            if (clickedObject != null)
-                //Debug.Log(clickedObject.name);
-                new Action().mouseMove(o, Input.mousePosition);
+            bool userAttemptingToMove = isUserAttemptingToMove(primaryClicked, upPressed, rightPressed, downPressed, leftPressed);
+
+            if (!userAttemptingToMove)
+                new Action().attemptToStopMoving(o);
             else
+                new Action().moving(o);
 
-                new Action().mouseMove(o, Input.mousePosition);
+            if (primaryClicked)
+            {
+                InputTool inputTool = new InputTool();
+                GameObject clickedObject = inputTool.checkIfItemAtScreenPosition(Input.mousePosition);
+
+                if (clickedObject != null)
+                    //Debug.Log(clickedObject.name);
+                    new Action().mouseMove(o, Input.mousePosition);
+                else
+
+                    new Action().mouseMove(o, Input.mousePosition);
+            }
+
+            if (!primaryClicked)
+                if (upPressed || rightPressed || downPressed || leftPressed)
+                    new Action().moveCardinal(o, upPressed, rightPressed, downPressed, leftPressed);
         }
 
-        if (!primaryClicked)
-            if (upPressed || rightPressed || downPressed || leftPressed)
-                new Action().moveCardinal(o, upPressed, rightPressed, downPressed, leftPressed);
     }
 
     private bool isPrimaryClicked(HashSet<MouseAction> mouseInput)

@@ -49,7 +49,7 @@ public class Action
 
     private void moveToPoint(GameObject o, Vector2 mousePos)
     {
-        Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        Camera mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
         Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
         float strength = o.GetComponent<CharacterStats>().strength;
         if (mainCamera != null)
@@ -71,8 +71,8 @@ public class Action
 
     }
 
-    /*
-     * AS LONG AS THE LINEAR DRAG COEFFICIENT IS >= 1  SPEED WILL NEVER ACCELERATE PAST FORCE APPLIED MAKING THIS FUNCTION SUPERFLUOUS
+    
+    /* AS LONG AS THE LINEAR DRAG COEFFICIENT IS >= 1  SPEED WILL NEVER ACCELERATE PAST FORCE APPLIED MAKING THIS FUNCTION SUPERFLUOUS
      * 
     private bool limitSpeedToMaxSpeed(Rigidbody2D rigidbody, float maxSpeed)
     {

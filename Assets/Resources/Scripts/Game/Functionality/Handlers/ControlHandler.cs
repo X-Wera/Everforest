@@ -7,9 +7,9 @@ public class ControlHandler
 
     public void addObject(GameObject o)
     {
-        if (o.GetComponent<Rigidbody2D>() == null || o.GetComponent<Stats>() == null)
+        if (o.GetComponent<Rigidbody2D>() == null || o.GetComponent <EverForestObject> () == null)
         {
-            Debug.LogError(o +": Was not set Controlled. A controlled object requires both a Rigidbody2D & StatsHolder component to move. " + this);
+            Debug.LogError(o +": Was not set Controlled. A controlled object requires both a Rigidbody2d. And an EverForestObject Script (Or a script that inherents EverForest Object)" + this);
             return;
         }
         currentlyControlled.Add(o);

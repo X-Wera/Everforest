@@ -14,18 +14,18 @@ public class ObjectHandler
         this.resource = resource;
     }
 
-    public GameObject createObject(string objectTypeName, Vector3 creationPosition, bool controlled, float height)
+    public GameObject createObject(string objectTypeName, Vector3 creationPosition, bool controlled, float altitude)
     {
         GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
-        initializedObject.GetComponent<Stats>().height = height;
+        initializedObject.GetComponent<EverForestObject>().altitude = altitude;
         gameObjects.Add(initializedObject);
         if (controlled) { controlHandler.addObject(initializedObject); }
         return initializedObject;
     }
-    public GameObject createObject(string objectTypeName, Vector3 creationPosition, float height)
+    public GameObject createObject(string objectTypeName, Vector3 creationPosition, float altitude)
     {
         GameObject initializedObject = MonoBehaviour.Instantiate(resource.getObjectPrefab(objectTypeName), creationPosition, Quaternion.identity);
-        initializedObject.GetComponent<Stats>().height = height;
+        initializedObject.GetComponent<EverForestObject>().altitude = altitude;
         gameObjects.Add(initializedObject);
         return initializedObject;
     }

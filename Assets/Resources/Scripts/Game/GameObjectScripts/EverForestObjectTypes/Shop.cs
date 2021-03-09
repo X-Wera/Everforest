@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shop : MonoBehaviour
+public class Shop : Destructible
 {
     private GameManagerScript gameManager;
     HashSet<GameObject> currentlyInReach = new HashSet<GameObject>();
@@ -10,7 +10,7 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
-        gameManager = GameObject.Find("GameManagerObject").GetComponent<GameManagerScript>();
+        gameManager = GameObject.Find("Game(Clone)").GetComponent<GameManagerScript>();
     }
     void OnMouseDown()
     {

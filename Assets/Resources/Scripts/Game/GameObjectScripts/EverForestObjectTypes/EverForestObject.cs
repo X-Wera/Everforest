@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stats : MonoBehaviour
+public class EverForestObject : MonoBehaviour
 {
-
     // Added to Z Axis after ZY Depth is calculated
-    public float height { get; set; }
+    public float altitude { get; set; }
 
     // weight/mass
     public float getWeight()

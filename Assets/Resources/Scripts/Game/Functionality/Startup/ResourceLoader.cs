@@ -6,6 +6,13 @@ using Exception = System.Exception;
 public class ResourceLoader : MonoBehaviour
 {
     public GameObject[] EverForestObjects;
+    //public Texture2D[] Textures;
+    public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
+
+    void Start()
+    {
+        //convertAllImagesToSprites();
+    }
 
     public GameObject getObjectPrefab(string nameOfObject)
     {
@@ -16,16 +23,7 @@ public class ResourceLoader : MonoBehaviour
                           + "Create Object Prefab and add it to the ResourceObject.EverForestObjects Array through Unitys GUI " + System.Environment.NewLine
                           + this);
     }
-
-    public Texture2D[] Textures;
-
-    public Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
-
-    void Start()
-    {
-        convertAllImagesToSprites();
-    }
-
+    /*
     public Sprite getSprite(string nameOfImage)
     {
         foreach (KeyValuePair<string, Sprite> kvp in sprites)
@@ -46,5 +44,5 @@ public class ResourceLoader : MonoBehaviour
 
         }
     }
-
+    */
 }
