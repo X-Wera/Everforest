@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : Destructible
+public class Character : Destructible
 
 {
     void Start()
@@ -38,6 +38,8 @@ public class CharacterStats : Destructible
     {
         if (f >= endurance)
             this.stamina = endurance;
+        else if (f <= 0)
+            this.stamina = 0;
         else
             this.stamina = f;
     }

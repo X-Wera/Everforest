@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class EnvironmentManager
 {
-    private UpdateHandler updateHandler;
     private ObjectHandler objectHandler;
     private GameObject mainCameraObject;
 
-    public EnvironmentManager(UpdateHandler updateHandler, ObjectHandler objectHandler, GameObject mainCameraObject)
+    public EnvironmentManager(ObjectHandler objectHandler, GameObject mainCameraObject)
     {
-        this.updateHandler = updateHandler;
         this.objectHandler = objectHandler;
         this.mainCameraObject = mainCameraObject;
     }
@@ -29,6 +27,6 @@ public class EnvironmentManager
     private void initializePlayer()
     {
         GameObject obj = objectHandler.createObject("MainCharacter", new Vector3(0, 0, 0), true, 0);
-        mainCameraObject.GetComponent<CameraScript>().setFocused(obj);
+        mainCameraObject.GetComponent<CameraScript>().currenltyFocusedObject = obj;
     }
 }

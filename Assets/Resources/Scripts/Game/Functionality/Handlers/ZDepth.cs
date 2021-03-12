@@ -36,7 +36,6 @@ public class ZDepth : MonoBehaviour
             setFurthestAndClosest(o, zDepth);
             o.transform.position = new Vector3(o.transform.position.x, o.transform.position.y, zDepth + o.GetComponent<EverForestObject>().altitude);
             trimClipping();
-            //Debug.Log(closestObjectInDistance + "," + farthestObjectOutDistance);
         }
     }
 

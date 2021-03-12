@@ -1,15 +1,70 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class Action
+public class ActionHandler
+{
+    private InputHandler inputHandler;
+
+    public ActionHandler(InputHandler inputHandler)
+    {
+        this.inputHandler = inputHandler;
+    }
+
+    public void attemptActions(GameObject o, HashSet<CharacterAction> attemptedActions)
+    {
+        if (attemptedActions.Contains(CharacterAction.Escape))
+        {
+            Time.timeScale = 0;
+            MonoBehaviour.Instantiate(GameObject.Find("ResourceObject").GetComponent<ResourceLoader>().getObjectPrefab("InGameMenu"),
+new Vector3(0, 0, 0), Quaternion.identity);
+        }
+        else
+        {
+            bool primaryClicked = attemptedActions.Contains(CharacterAction.MousePrimary);
+            bool upPressed = attemptedActions.Contains(CharacterAction.MoveUp);
+            bool rightPressed = attemptedActions.Contains(CharacterAction.MoveRight);
+            bool downPressed = attemptedActions.Contains(CharacterAction.MoveDown);
+            bool leftPressed = attemptedActions.Contains(CharacterAction.MoveLeft);
+            bool userAttemptingToMove = false;
+
+            if (primaryClicked || upPressed || rightPressed || downPressed || leftPressed)
+                userAttemptingToMove = true;
+
+            if (!userAttemptingToMove)
+                new Action().attemptToStopMoving(o);
+            else
+                new Action().moving(o);
+
+
+            if (primaryClicked)
+            {
+                GameObject clickedObject = inputHandler.CheckIfObjectAtPostion(Input.mousePosition);
+
+                if (clickedObject != null)
+                    //Debug.Log(clickedObject.name);
+                    new Action().mouseMove(o, Input.mousePosition);
+                else
+                    new Action().mouseMove(o, Input.mousePosition);
+
+            }
+
+            if (!primaryClicked)
+                if (upPressed || rightPressed || downPressed || leftPressed)
+                    new Action().moveCardinal(o, attemptedActions, upPressed, rightPressed, downPressed, leftPressed);
+
+        }
+
+    }
+}
+class Action
 {
 
-    public void moveCardinal(GameObject o, bool upPressed, bool rightPressed, bool downPressed, bool leftPressed)
+    public void moveCardinal(GameObject o, HashSet<CharacterAction> actions, bool upPressed, bool rightPressed, bool downPressed, bool leftPressed)
     {
         Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
-        float strength = o.GetComponent<CharacterStats>().strength;
+        float strength = o.GetComponent<Character>().strength;
         float velx = 0f, vely = 0f;
 
         if (upPressed) vely++;
@@ -37,8 +92,8 @@ public class Action
 
     public void attemptToStopMoving(GameObject o)
     {
-        // Slowes down based on agilty
-        o.GetComponent<Rigidbody2D>().drag = o.GetComponent<CharacterStats>().agility;
+        // Slows down based on agilty
+        o.GetComponent<Rigidbody2D>().drag = o.GetComponent<Character>().agility;
     }
 
     public void moving(GameObject o)
@@ -51,7 +106,7 @@ public class Action
     {
         Camera mainCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
         Rigidbody2D rigidBody = o.GetComponent<Rigidbody2D>();
-        float strength = o.GetComponent<CharacterStats>().strength;
+        float strength = o.GetComponent<Character>().strength;
         if (mainCamera != null)
         {
             Vector2 target = mainCamera.ScreenToWorldPoint(mousePos);
@@ -68,10 +123,8 @@ public class Action
             // Accelerates based off agility
             rigidBody.AddForce(direction * strength);
         }
-
     }
 
-    
     /* AS LONG AS THE LINEAR DRAG COEFFICIENT IS >= 1  SPEED WILL NEVER ACCELERATE PAST FORCE APPLIED MAKING THIS FUNCTION SUPERFLUOUS
      * 
     private bool limitSpeedToMaxSpeed(Rigidbody2D rigidbody, float maxSpeed)

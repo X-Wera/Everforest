@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Shop : Destructible
 {
-    private GameManagerScript gameManager;
-    HashSet<GameObject> currentlyInReach = new HashSet<GameObject>();
-    GameObject menu;
 
-    private void Start()
-    {
-        gameManager = GameObject.Find("Game(Clone)").GetComponent<GameManagerScript>();
-    }
-    void OnMouseDown()
+    private HashSet<GameObject> currentlyInReach = new HashSet<GameObject>();
+    private GameObject menu;
+
+
+    private void OnMouseDown()
     {
         //Debug.Log(this + " clicked.");
     }

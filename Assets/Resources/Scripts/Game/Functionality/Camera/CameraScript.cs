@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    GameObject currenltyFocusedObject;
+    public GameObject currenltyFocusedObject { get; set; }
 
     void Update()
     {
@@ -12,15 +12,5 @@ public class CameraScript : MonoBehaviour
         {
             this.transform.position = new Vector3(currenltyFocusedObject.transform.position.x, currenltyFocusedObject.transform.position.y, this.transform.position.z);
         }
-    }
-
-    public void setFocused(GameObject o)
-    {
-        currenltyFocusedObject = o;
-    }
-
-    public GameObject getFocused()
-    {
-        return currenltyFocusedObject;
     }
 }
