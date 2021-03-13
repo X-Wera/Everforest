@@ -20,6 +20,9 @@ public class EnvironmentManager
 
     private void createHome()
     {
+        objectHandler.createObject("Coin", new Vector3(0, 1.5f, 0));
+        objectHandler.createObject("Coin", new Vector3(1f, 1.5f, 0));
+        objectHandler.createObject("Coin", new Vector3(2f, 1.5f, 0));
         objectHandler.createObject("Shop", new Vector3(-1f, -1f, 0));
         objectHandler.createObject("Rat", new Vector3(1f, 0, 0));
     }
